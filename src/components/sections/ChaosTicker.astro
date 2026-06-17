@@ -9,7 +9,7 @@ const items = CHAOS.map(
 ---
 
 <div class="banner">
-  <Marquee class="ticker" speed={38} ariaHidden>
+  <Marquee class="ticker" speed={38} ariaHidden pauseOnHover={false}>
     <Fragment set:html={items} />
   </Marquee>
 </div>

@@ -1,99 +1,52 @@
 ---
-import Marquee from "@/components/ui/Marquee.astro";
-import { SITE } from "@/data/site.config";
-
-const trackContent = Array.from({ length: 6 }, (_, i) =>
-  `<span class="it${i % 2 ? " outline" : ""}">Let's collaborate</span>`,
-).join("");
+const items = Array.from({ length: 10 }, () => "Trabajemos juntos").join(" · ");
+const track = Array.from({ length: 2 }, () => items).join(" · ");
 ---
 
 <section class="collab" id="contact">
-  <div class="glow"></div>
-  <div class="inner">
-    <p class="fit" data-reveal>Let's see if we are a good fit</p>
-    <Marquee class="collab-marquee" speed={24} masked>
-      <Fragment set:html={trackContent} />
-    </Marquee>
-    <a class="mail" href={`mailto:${SITE.email}`} data-magnetic>
-      <span class="mdot" aria-hidden="true"></span>
-      {SITE.email}
-    </a>
+  <div class="capsule">
+    <div class="carousel-track">
+      <span set:html={track}></span>
+    </div>
   </div>
 </section>
 
 <style>
   .collab {
-    position: relative;
-    text-align: center;
     padding-block: clamp(80px, 12vw, 170px);
+    display: flex;
+    justify-content: center;
+    align-items: center;
+  }
+  .capsule {
     overflow: hidden;
-  }
-  .glow {
-    position: absolute;
-    left: 50%;
-    top: 50%;
-    width: 70vw;
-    height: 70vw;
-    transform: translate(-50%, -50%);
-    background: radial-gradient(circle, rgba(44, 167, 122, 0.22), transparent 60%);
-    filter: blur(40px);
-    z-index: 0;
-  }
-  .inner {
+    white-space: nowrap;
+    border-radius: 999px;
+    padding: 0 32px;
+    background: rgba(255, 255, 255, 0.04);
+    backdrop-filter: blur(12px);
+    -webkit-backdrop-filter: blur(12px);
+    border: 1px solid rgba(255, 255, 255, 0.08);
+    transition: box-shadow 0.4s ease;
     position: relative;
-    z-index: 2;
+    max-width: 95vw;
   }
-  .fit {
-    font-weight: 200;
-    font-size: clamp(1rem, 1.6vw, 1.25rem);
-    color: var(--color-muted);
-    letter-spacing: 0.04em;
-    margin-bottom: 18px;
+  .capsule:hover {
+    box-shadow: inset 0 0 50px rgba(160, 119, 240, 0.35);
   }
-  .collab-marquee :global(.it) {
+  .carousel-track {
+    display: inline-flex;
+    animation: marq 80s linear infinite;
     font-weight: 900;
-    letter-spacing: -0.04em;
     font-size: clamp(2.6rem, 9vw, 8rem);
+    letter-spacing: -0.04em;
     text-transform: uppercase;
-    padding-inline: 30px;
-    display: inline-flex;
-    align-items: center;
-    gap: 30px;
+    color: #fff;
+    line-height: 1.4;
   }
-  .collab-marquee :global(.it::after) {
-    content: "";
-    width: 0.42em;
-    height: 0.42em;
-    border-radius: 50%;
-    background: var(--color-accent-bright);
-    display: inline-block;
-  }
-  .collab-marquee :global(.it.outline) {
-    color: transparent;
-    -webkit-text-stroke: 1.4px rgba(255, 255, 255, 0.32);
-  }
-  .mail {
-    display: inline-flex;
-    align-items: center;
-    gap: 12px;
-    font-size: clamp(1.05rem, 2vw, 1.5rem);
-    font-weight: 600;
-    border: 1px solid var(--border);
-    border-radius: 40px;
-    padding: 16px 30px;
-    transition: 0.4s var(--ease-brand);
-    margin-top: 30px;
-  }
-  .mail:hover {
-    background: var(--color-accent-bright);
-    color: #000;
-    border-color: var(--color-accent-bright);
-  }
-  .mdot {
-    width: 8px;
-    height: 8px;
-    border-radius: 50%;
-    background: var(--color-accent-bright);
-    display: inline-block;
+  @keyframes marq {
+    to {
+      transform: translateX(-50%);
+    }
   }
 </style>

@@ -2,50 +2,6 @@
    Base global — reset, tipografías, body y utilidades compartidas
    ============================================================ */
 
-/* ---- Acari Sans (opcional: activa al colocar los woff2 en /public/assets/fonts) ---- */
-@font-face {
-  font-family: "Acari Sans";
-  src: url("/assets/fonts/AcariSans-ExtraLight.woff2") format("woff2");
-  font-weight: 200;
-  font-style: normal;
-  font-display: swap;
-}
-@font-face {
-  font-family: "Acari Sans";
-  src: url("/assets/fonts/AcariSans-Regular.woff2") format("woff2");
-  font-weight: 400;
-  font-style: normal;
-  font-display: swap;
-}
-@font-face {
-  font-family: "Acari Sans";
-  src: url("/assets/fonts/AcariSans-Medium.woff2") format("woff2");
-  font-weight: 500;
-  font-style: normal;
-  font-display: swap;
-}
-@font-face {
-  font-family: "Acari Sans";
-  src: url("/assets/fonts/AcariSans-SemiBold.woff2") format("woff2");
-  font-weight: 600;
-  font-style: normal;
-  font-display: swap;
-}
-@font-face {
-  font-family: "Acari Sans";
-  src: url("/assets/fonts/AcariSans-Bold.woff2") format("woff2");
-  font-weight: 700;
-  font-style: normal;
-  font-display: swap;
-}
-@font-face {
-  font-family: "Acari Sans";
-  src: url("/assets/fonts/AcariSans-Black.woff2") format("woff2");
-  font-weight: 900;
-  font-style: normal;
-  font-display: swap;
-}
-
 /* ---- reset ---- */
 * {
   margin: 0;
