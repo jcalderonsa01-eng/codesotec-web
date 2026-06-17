@@ -30,28 +30,37 @@ import Button from "@/components/ui/Button.astro";
     </div>
   </div>
 
-  <div class="relative z-5 flex w-full items-center justify-center">
-    <div class="wrap">
-      <h1
-        class="hero-title text-center leading-[.9] font-black tracking-tight uppercase"
-        style="font-size:clamp(3rem,10vw,10.25rem)"
-      >
-        <span class="hero-title-mask block">
-          <span class="hero-word-inner inline-flex" aria-label="CODESOTEC">
-            {
-              "CODESOTEC".split("").map((char, i) => (
-                <span class="hero-letter" style={`--i:${i}`}>
-                  {char}
-                </span>
-              ))
-            }
+  <div class="relative z-5 flex min-h-svh w-full flex-col">
+    <div class="flex flex-1 items-center justify-center py-8">
+      <div class="wrap">
+        <h1
+          class="hero-title text-center leading-[.9] font-black tracking-tight uppercase"
+          style="font-size:clamp(3rem,10vw,10.25rem)"
+        >
+          <span class="hero-title-mask block">
+            <span class="hero-word-inner inline-flex" aria-label="CODESOTEC">
+              {
+                "CODESOTEC".split("").map((char, i) => (
+                  <span class="hero-letter" style={`--i:${i}`}>
+                    {char}
+                  </span>
+                ))
+              }
+            </span>
           </span>
-        </span>
-      </h1>
+        </h1>
+      </div>
+    </div>
+    <div class="hero-copy">
+      <p class="hero-subtitle">
+        <strong>Tecnología que impulsa tu negocio</strong>
+      </p>
+      <p class="hero-description">
+        Integramos, desarrollamos y proveemos soluciones TI de alto rendimiento para medianas y
+        grandes empresas. Escalabilidad garantizada.
+      </p>
     </div>
   </div>
-
-
 </section>
 
 <style>
@@ -78,6 +87,48 @@ import Button from "@/components/ui/Button.astro";
       transform 1.1s var(--ease-brand),
       opacity 0.85s var(--ease-brand);
     transition-delay: calc(var(--i, 0) * 0.07s + 0.2s);
+  }
+
+  .hero-copy {
+    padding-left: clamp(40px, 6vw, 72px);
+    padding-right: 1.25rem;
+    padding-bottom: clamp(24px, 4vw, 56px);
+    max-width: min(680px, 100%);
+  }
+
+  .hero-subtitle {
+    font-size: clamp(1rem, 2vw, 1.5rem);
+    margin-bottom: 0.5rem;
+    line-height: 1.3;
+    transform: translateY(1.5rem);
+    opacity: 0;
+    will-change: transform, opacity;
+    max-width: 50ch;
+  }
+  .hero-description {
+    font-size: clamp(0.8rem, 1.2vw, 1rem);
+    color: var(--color-muted);
+    line-height: 1.6;
+    transform: translateY(1.5rem);
+    opacity: 0;
+    will-change: transform, opacity;
+    max-width: 60ch;
+  }
+  .in .hero-subtitle {
+    transform: translateY(0);
+    opacity: 1;
+    transition:
+      transform 1.1s var(--ease-brand),
+      opacity 0.85s var(--ease-brand);
+    transition-delay: 1.1s;
+  }
+  .in .hero-description {
+    transform: translateY(0);
+    opacity: 1;
+    transition:
+      transform 1.1s var(--ease-brand),
+      opacity 0.85s var(--ease-brand);
+    transition-delay: 1.35s;
   }
 
   @media (prefers-reduced-motion: reduce) {

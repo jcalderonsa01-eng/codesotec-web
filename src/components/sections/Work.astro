@@ -1,21 +1,64 @@
 ---
-import SectionHeading from "@/components/ui/SectionHeading.astro";
-import WorkCard from "@/components/sections/WorkCard.astro";
-import { WORK } from "@/data/work";
+const areas = [
+  "Desarrollo",
+  "Infraestructura",
+  "Ciberseguridad",
+  "Consultoría",
+  "Automatización",
+  "IA & Datos",
+  "IoT",
+  "Soporte",
+];
 
-const total = WORK.length;
+const cells = [
+  { x: 0, y: 0, w: 300, h: 200, label: { x: 10, y: 190 }, fs: 10 },
+  { x: 300, y: 0, w: 600, h: 200, label: { x: 310, y: 190 }, fs: 10 },
+  { x: 0, y: 200, w: 300, h: 200, label: { x: 10, y: 390 }, fs: 10 },
+  { x: 300, y: 200, w: 300, h: 200, label: { x: 310, y: 390 }, fs: 10 },
+  { x: 600, y: 200, w: 300, h: 200, label: { x: 610, y: 390 }, fs: 10 },
+  { x: 0, y: 400, w: 450, h: 200, label: { x: 10, y: 590 }, fs: 10 },
+  { x: 450, y: 400, w: 450, h: 200, label: { x: 460, y: 590 }, fs: 10 },
+  { x: 0, y: 600, w: 900, h: 200, label: { x: 10, y: 790 }, fs: 10 },
+];
 ---
 
 <section class="section" id="work">
   <div class="wrap">
-    <SectionHeading
-      index="(01) — Selected Work"
-      description="A selection of products, platforms and brands we designed and built end-to-end."
-    >
-      Things we've<br />made happen
-    </SectionHeading>
-    <div class="work-grid">
-      {WORK.map((item, i) => <WorkCard item={item} index={i} total={total} />)}
+    <h1 class="section-title" data-reveal>Áreas de negocio</h1>
+    <div class="mosaic-wrap">
+      <svg
+        class="mosaic"
+        viewBox="0 0 900 800"
+        fill="none"
+        stroke="#A6A6A6"
+        stroke-width="0.5"
+        xmlns="http://www.w3.org/2000/svg"
+      >
+        <defs>
+          <clipPath id="rounded">
+            <rect width="900" height="800" rx="6"></rect>
+          </clipPath>
+        </defs>
+        <g clip-path="url(#rounded)">
+          {cells.map((c) => <rect x={c.x} y={c.y} width={c.w} height={c.h} />)}
+        </g>
+        <rect width="900" height="800" rx="6" stroke="#A6A6A6" stroke-width="0.5" fill="none"
+        ></rect>
+        {
+          cells.map((c, i) => (
+            <text
+              x={c.label.x}
+              y={c.label.y}
+              fill="#A6A6A6"
+              font-size={c.fs}
+              letter-spacing="-0.02em"
+              class="area-label"
+            >
+              {areas[i]}
+            </text>
+          ))
+        }
+      </svg>
     </div>
   </div>
 </section>
@@ -25,14 +68,24 @@ const total = WORK.length;
     padding-block: clamp(72px, 11vw, 150px);
     position: relative;
   }
-  .work-grid {
-    display: grid;
-    grid-template-columns: repeat(2, 1fr);
-    gap: clamp(20px, 2.4vw, 34px);
+  .mosaic-wrap {
+    max-width: 3600px;
+    margin: 0 auto;
+    width: 100%;
   }
-  @media (max-width: 820px) {
-    .work-grid {
-      grid-template-columns: 1fr;
-    }
+  .mosaic {
+    width: 100%;
+    height: auto;
+    display: block;
+  }
+  .section-title {
+    font-weight: 900;
+    letter-spacing: -0.035em;
+    line-height: 0.5;
+    font-size: clamp(2.4rem, 6.5vw, 5.5rem);
+    margin-bottom: clamp(34px, 5vw, 64px);
+  }
+  .area-label {
+    font-family: var(--font-sans);
   }
 </style>
