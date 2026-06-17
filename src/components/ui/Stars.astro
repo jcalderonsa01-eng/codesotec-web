@@ -1,0 +1,31 @@
+---
+/** Fila de estrellas (rating). */
+interface Props {
+  count?: number;
+  class?: string;
+}
+const { count = 5, class: className } = Astro.props;
+const stars = Array.from({ length: count });
+---
+
+<span class:list={["stars", className]} aria-hidden="true">
+  {
+    stars.map(() => (
+      <svg viewBox="0 0 24 24">
+        <path d="M12 2l3 6.9 7.5.6-5.7 5 1.7 7.4L12 18l-6.5 3.9 1.7-7.4L1.5 9.5 9 8.9z" />
+      </svg>
+    ))
+  }
+</span>
+
+<style>
+  .stars {
+    display: flex;
+    gap: 3px;
+  }
+  .stars svg {
+    width: 20px;
+    height: 20px;
+    fill: var(--color-accent-bright);
+  }
+</style>

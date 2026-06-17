@@ -1,0 +1,43 @@
+---
+import "@/styles/global.css";
+import { SITE } from "@/data/site.config";
+import Preloader from "@/components/layout/Preloader.astro";
+
+import Navbar from "@/components/layout/Navbar.astro";
+import MobileMenu from "@/components/layout/MobileMenu.astro";
+import Footer from "@/components/layout/Footer.astro";
+
+interface Props {
+  title?: string;
+  description?: string;
+}
+const { title, description } = Astro.props;
+const pageTitle = title
+  ? `${title} · ${SITE.brand.name}`
+  : `${SITE.brand.name} — Tecnología que impulsa tu negocio`;
+const pageDesc =
+  description ??
+  `${SITE.brand.name}: integramos, desarrollamos y proveemos soluciones TI de alto rendimiento para medianas y grandes empresas.`;
+---
+
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <title>{pageTitle}</title>
+    <meta name="description" content={pageDesc} />
+  </head>
+  <body>
+    <div class="bg-overlay" aria-hidden="true"></div>
+    <Preloader />
+    <Navbar />
+    <MobileMenu />
+    <slot />
+    <Footer />
+
+    <script>
+      import "@/scripts/main.client";
+    </script>
+  </body>
+</html>

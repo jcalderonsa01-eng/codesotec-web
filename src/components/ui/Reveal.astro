@@ -1,0 +1,14 @@
+---
+/**
+ * Envoltorio que inyecta los hooks de reveal (data-reveal / data-d).
+ * Mantiene los componentes "limpios": no saben qué los anima (SRP).
+ */
+interface Props {
+  as?: keyof HTMLElementTagNameMap;
+  delay?: 1 | 2 | 3 | 4;
+  class?: string;
+}
+const { as: Tag = "div", delay, class: className } = Astro.props;
+---
+
+<Tag data-reveal data-d={delay} class={className}><slot /></Tag>

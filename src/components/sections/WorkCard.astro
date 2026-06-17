@@ -1,0 +1,127 @@
+---
+import type { WorkItem } from "@/data/types";
+import Tag from "@/components/ui/Tag.astro";
+
+interface Props {
+  item: WorkItem;
+  index: number;
+  total: number;
+}
+const { item, index, total } = Astro.props;
+const num = String(index + 1).padStart(2, "0");
+---
+
+<a class="work-card" href={item.href ?? "#contact"} data-reveal data-d={(index % 2) + 1}>
+  <div class="media">
+    <div class="fill" style={`background:linear-gradient(135deg,${item.gradient[0]},${item.gradient[1]})`}></div>
+    <div class="wc-noise"></div>
+    <span class="num">{num} / {String(total).padStart(2, "0")}</span>
+  </div>
+  <div class="meta">
+    <div class="tags">
+      {item.tags.map((tag) => <Tag>{tag}</Tag>)}
+    </div>
+    <h3>
+      {item.title}
+      <span class="arr" aria-hidden="true">↗</span>
+    </h3>
+    <p>{item.description}</p>
+  </div>
+</a>
+
+<style>
+  .work-card {
+    position: relative;
+    border-radius: 16px;
+    overflow: hidden;
+    background: var(--color-surface);
+    border: 1px solid var(--border-soft);
+    cursor: pointer;
+    isolation: isolate;
+    display: block;
+  }
+  .media {
+    position: relative;
+    aspect-ratio: 16 / 10;
+    overflow: hidden;
+  }
+  .fill {
+    position: absolute;
+    inset: 0;
+    transform: scale(1.02);
+    transition: transform 0.9s var(--ease-brand);
+    background-size: 200% 200%;
+    animation: hue 14s ease infinite;
+  }
+  .work-card:hover .fill {
+    transform: scale(1.08);
+  }
+  .media::after {
+    content: "";
+    position: absolute;
+    inset: 0;
+    background: linear-gradient(180deg, transparent 40%, rgba(8, 8, 8, 0.7));
+    z-index: 1;
+  }
+  .wc-noise {
+    position: absolute;
+    inset: 0;
+    z-index: 1;
+    opacity: 0.16;
+    mix-blend-mode: overlay;
+    background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='80' height='80'%3E%3Cfilter id='n2'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.8' numOctaves='2'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n2)'/%3E%3C/svg%3E");
+  }
+  .num {
+    position: absolute;
+    top: 18px;
+    right: 20px;
+    z-index: 3;
+    font-family: var(--font-mono);
+    font-size: 0.72rem;
+    letter-spacing: 0.1em;
+    color: rgba(255, 255, 255, 0.7);
+  }
+  .meta {
+    position: relative;
+    z-index: 3;
+    padding: 22px 24px 26px;
+  }
+  .tags {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 7px;
+    margin-bottom: 14px;
+  }
+  .meta h3 {
+    font-size: clamp(1.3rem, 2.4vw, 1.9rem);
+    font-weight: 700;
+    letter-spacing: -0.03em;
+    margin-bottom: 9px;
+    display: flex;
+    align-items: center;
+    gap: 12px;
+  }
+  .arr {
+    margin-left: auto;
+    width: 34px;
+    height: 34px;
+    border-radius: 50%;
+    border: 1px solid var(--border);
+    display: grid;
+    place-items: center;
+    flex: 0 0 auto;
+    transition: 0.4s var(--ease-brand);
+  }
+  .work-card:hover .arr {
+    background: var(--color-accent-bright);
+    border-color: var(--color-accent-bright);
+    color: #000;
+    transform: rotate(-45deg);
+  }
+  .meta p {
+    color: var(--color-muted);
+    font-size: 0.95rem;
+    line-height: 1.55;
+    max-width: 52ch;
+  }
+</style>

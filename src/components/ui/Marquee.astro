@@ -1,0 +1,58 @@
+---
+/**
+ * Marquesina reutilizable — UN solo motor para los 3 tickers del sitio
+ * (chaos / awards / collaborate). Es la mayor ganancia DRY de la migración.
+ *
+ * El contenido (slot) se renderiza a HTML y se duplica `repeat` veces para
+ * un loop sin costuras (la keyframe `marq` desplaza translateX(-50%)).
+ */
+interface Props {
+  /** Segundos por ciclo completo. */
+  speed?: number;
+  /** Cuántas veces se duplica el contenido (2 = loop perfecto). */
+  repeat?: number;
+  pauseOnHover?: boolean;
+  masked?: boolean;
+  ariaHidden?: boolean;
+  class?: string;
+}
+const {
+  speed = 36,
+  repeat = 2,
+  pauseOnHover = true,
+  masked = false,
+  ariaHidden = true,
+  class: className,
+} = Astro.props;
+
+const content = await Astro.slots.render("default");
+const tracks = Array.from({ length: Math.max(2, repeat) }, () => content).join("");
+---
+
+<div
+  class:list={["marquee", { masked, "pause-hover": pauseOnHover }, className]}
+  aria-hidden={ariaHidden}
+>
+  <div class="track" style={`animation-duration:${speed}s`} set:html={tracks}></div>
+</div>
+
+<style>
+  .marquee {
+    overflow: hidden;
+    white-space: nowrap;
+  }
+  .track {
+    display: inline-flex;
+    animation-name: marq;
+    animation-timing-function: linear;
+    animation-iteration-count: infinite;
+    will-change: transform;
+  }
+  .marquee.pause-hover:hover .track {
+    animation-play-state: paused;
+  }
+  .marquee.masked {
+    -webkit-mask-image: linear-gradient(90deg, transparent, #000 12%, #000 88%, transparent);
+    mask-image: linear-gradient(90deg, transparent, #000 12%, #000 88%, transparent);
+  }
+</style>

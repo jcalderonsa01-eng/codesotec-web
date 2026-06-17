@@ -1,0 +1,76 @@
+---
+/**
+ * Botón/enlace con dos variantes. Renderiza <a> si hay `href`, si no <button>.
+ * `magnetic` emite el hook data-magnetic (lo anima lib/animations/magnetic.ts).
+ */
+interface Props {
+  variant?: "solid" | "ghost";
+  href?: string;
+  magnetic?: boolean;
+  showDot?: boolean;
+  type?: "button" | "submit";
+  class?: string;
+}
+const {
+  variant = "solid",
+  href,
+  magnetic = false,
+  showDot = variant === "solid",
+  type = "button",
+  class: className,
+} = Astro.props;
+
+const Tag = href ? "a" : "button";
+---
+
+<Tag
+  class:list={["btn", variant, className]}
+  href={href}
+  type={href ? undefined : type}
+  data-magnetic={magnetic ? "" : undefined}
+>
+  {showDot && <span class="dot" aria-hidden="true"></span>}
+  <slot />
+</Tag>
+
+<style>
+  .btn {
+    display: inline-flex;
+    align-items: center;
+    gap: 9px;
+    font-weight: 600;
+    font-size: 0.92rem;
+    border-radius: 30px;
+    padding: 12px 22px;
+    cursor: pointer;
+    border: 0;
+    background: var(--color-fg);
+    color: #000;
+    /* gsap owna el transform (magnético); el CSS solo transiciona el color. */
+    transition: background 0.3s var(--ease-brand);
+    position: relative;
+    will-change: transform;
+  }
+  .btn:hover {
+    background: var(--color-accent-bright);
+  }
+  .btn .dot {
+    width: 7px;
+    height: 7px;
+    border-radius: 50%;
+    background: var(--color-accent);
+    transition: background 0.3s;
+  }
+  .btn:hover .dot {
+    background: #000;
+  }
+  .btn.ghost {
+    background: transparent;
+    color: var(--color-fg);
+    border: 1px solid var(--border);
+  }
+  .btn.ghost:hover {
+    background: rgba(255, 255, 255, 0.06);
+    border-color: var(--color-accent-bright);
+  }
+</style>

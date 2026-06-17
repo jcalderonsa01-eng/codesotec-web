@@ -1,0 +1,8 @@
+# Coloca aquí las fuentes Acari Sans (woff2) para activarlas automáticamente:
+#   AcariSans-ExtraLight.woff2  (200)
+#   AcariSans-Regular.woff2     (400)
+#   AcariSans-Medium.woff2      (500)
+#   AcariSans-SemiBold.woff2    (600)
+#   AcariSans-Bold.woff2        (700)
+#   AcariSans-Black.woff2       (900)
+# Mientras no existan, la web usa el stack de sistema (font-display: swap). Sin cambios de código.

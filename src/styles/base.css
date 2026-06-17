@@ -1,0 +1,158 @@
+/* ============================================================
+   Base global — reset, tipografías, body y utilidades compartidas
+   ============================================================ */
+
+/* ---- Acari Sans (opcional: activa al colocar los woff2 en /public/assets/fonts) ---- */
+@font-face {
+  font-family: "Acari Sans";
+  src: url("/assets/fonts/AcariSans-ExtraLight.woff2") format("woff2");
+  font-weight: 200;
+  font-style: normal;
+  font-display: swap;
+}
+@font-face {
+  font-family: "Acari Sans";
+  src: url("/assets/fonts/AcariSans-Regular.woff2") format("woff2");
+  font-weight: 400;
+  font-style: normal;
+  font-display: swap;
+}
+@font-face {
+  font-family: "Acari Sans";
+  src: url("/assets/fonts/AcariSans-Medium.woff2") format("woff2");
+  font-weight: 500;
+  font-style: normal;
+  font-display: swap;
+}
+@font-face {
+  font-family: "Acari Sans";
+  src: url("/assets/fonts/AcariSans-SemiBold.woff2") format("woff2");
+  font-weight: 600;
+  font-style: normal;
+  font-display: swap;
+}
+@font-face {
+  font-family: "Acari Sans";
+  src: url("/assets/fonts/AcariSans-Bold.woff2") format("woff2");
+  font-weight: 700;
+  font-style: normal;
+  font-display: swap;
+}
+@font-face {
+  font-family: "Acari Sans";
+  src: url("/assets/fonts/AcariSans-Black.woff2") format("woff2");
+  font-weight: 900;
+  font-style: normal;
+  font-display: swap;
+}
+
+/* ---- reset ---- */
+* {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+}
+html {
+  scroll-behavior: smooth;
+  -webkit-text-size-adjust: 100%;
+}
+body {
+  background: var(--bg-gradient);
+  background-attachment: fixed;
+  color: var(--color-fg);
+  font-family: var(--font-sans);
+  font-weight: 400;
+  line-height: 1.5;
+  letter-spacing: -0.01em;
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+  overflow-x: hidden;
+}
+
+/* Pantalla oscura semitransparente — baja la exposición del degradado
+   sin perderlo, dejando el sitio en "modo dark" como pediste.
+   La inyecta BaseLayout como <div class="bg-overlay"> al inicio del body.
+   position: fixed + z-index 0 la pone POR DEBAJO del contenido en
+   flujo normal (que pinta a nivel "block-level", por encima de z:0). */
+.bg-overlay {
+  position: fixed;
+  inset: 0;
+  z-index: 0;
+  background: rgba(2, 4, 12, 0.62);
+  pointer-events: none;
+}
+
+/* Cada hijo directo de body se posiciona con z-index 1 para quedar
+   por encima del overlay (z 0) y debajo del cursor (z 9999). */
+body > * {
+  position: relative;
+  z-index: 1;
+}
+body.no-scroll {
+  overflow: hidden;
+}
+a {
+  color: inherit;
+  text-decoration: none;
+}
+img,
+video {
+  display: block;
+  max-width: 100%;
+}
+::selection {
+  background: var(--color-accent-bright);
+  color: #0a0a14;
+}
+
+/* ---- contenedor compartido (usado por todas las secciones) ---- */
+.wrap {
+  max-width: var(--maxw);
+  margin: 0 auto;
+  padding-inline: var(--pad);
+}
+
+/* ============================================================
+   Sistema de reveal (contrato con lib/animations/reveal.ts)
+   Estado base oculto; GSAP lo anima al entrar en viewport.
+   Si JS falla o hay reduced-motion, el contenido SIEMPRE se muestra.
+   ============================================================ */
+[data-reveal] {
+  opacity: 0;
+  transform: translateY(34px);
+  transition:
+    opacity 0.9s var(--ease-brand),
+    transform 0.9s var(--ease-brand);
+}
+[data-reveal].in {
+  opacity: 1;
+  transform: none;
+}
+[data-reveal][data-d="1"] {
+  transition-delay: 0.08s;
+}
+[data-reveal][data-d="2"] {
+  transition-delay: 0.16s;
+}
+[data-reveal][data-d="3"] {
+  transition-delay: 0.24s;
+}
+[data-reveal][data-d="4"] {
+  transition-delay: 0.32s;
+}
+
+/* ---- accesibilidad: reduced motion ---- */
+@media (prefers-reduced-motion: reduce) {
+  *,
+  *::before,
+  *::after {
+    animation-duration: 0.001ms !important;
+    animation-iteration-count: 1 !important;
+    transition-duration: 0.001ms !important;
+  }
+  /* el contenido nunca queda oculto */
+  [data-reveal] {
+    opacity: 1 !important;
+    transform: none !important;
+  }
+}

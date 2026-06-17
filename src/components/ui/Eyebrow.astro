@@ -1,0 +1,33 @@
+---
+/** Etiqueta superior en versalitas acento. Con `withLine` antepone una línea (hero). */
+interface Props {
+  withLine?: boolean;
+  class?: string;
+}
+const { withLine = false, class: className } = Astro.props;
+---
+
+<span class:list={["eyebrow", { "with-line": withLine }, className]}>
+  {withLine && <span class="ln" aria-hidden="true"></span>}
+  <slot />
+</span>
+
+<style>
+  .eyebrow {
+    font-size: 0.72rem;
+    font-weight: 600;
+    letter-spacing: 0.22em;
+    text-transform: uppercase;
+    color: var(--color-accent-bright);
+  }
+  .eyebrow.with-line {
+    display: inline-flex;
+    align-items: center;
+    gap: 11px;
+  }
+  .eyebrow .ln {
+    width: 48px;
+    height: 1px;
+    background: var(--color-accent-bright);
+  }
+</style>

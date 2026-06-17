@@ -1,0 +1,13 @@
+{
+  "permissions": {
+    "allow": [
+      "Bash(npm --version)",
+      "Bash(npx --version)",
+      "Bash(git --version)",
+      "Bash(gh repo *)",
+      "Bash(git ls-remote *)",
+      "Bash(cp /tmp/liquid-glass/displacement-utils.js \"D:/Git/codesotec-2026-web/public/scripts/liquid-glass/displacement-utils.js\")",
+      "Bash(cp /tmp/liquid-glass/glass-element.js \"D:/Git/codesotec-2026-web/public/scripts/liquid-glass/glass-element.js\")"
+    ]
+  }
+}

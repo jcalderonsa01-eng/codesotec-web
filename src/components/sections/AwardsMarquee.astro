@@ -1,0 +1,45 @@
+---
+import Marquee from "@/components/ui/Marquee.astro";
+import { AWARDS } from "@/data/awards";
+
+const items = AWARDS.map(
+  (a) => `<span class="aw"><span class="t">${a.title}</span><span class="s">${a.source}</span></span>`,
+).join("");
+---
+
+<Marquee class="awards" speed={42} ariaHidden>
+  <Fragment set:html={items} />
+</Marquee>
+
+<style>
+  .awards {
+    border-block: 1px solid var(--border);
+    background: var(--color-bg-2);
+    padding: 26px 0;
+  }
+  .aw {
+    display: inline-flex;
+    align-items: center;
+    gap: 16px;
+    padding-inline: 34px;
+    white-space: nowrap;
+  }
+  .aw::before {
+    content: "";
+    width: 6px;
+    height: 6px;
+    border-radius: 50%;
+    background: var(--color-accent);
+  }
+  .t {
+    font-weight: 700;
+    font-size: 1.05rem;
+    letter-spacing: -0.02em;
+  }
+  .s {
+    font-family: var(--font-mono);
+    font-size: 0.72rem;
+    color: var(--color-accent-bright);
+    letter-spacing: 0.08em;
+  }
+</style>

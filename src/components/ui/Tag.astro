@@ -1,0 +1,23 @@
+---
+/** Píldora de etiqueta (servicios de una tarjeta de trabajo). */
+interface Props {
+  class?: string;
+}
+const { class: className } = Astro.props;
+---
+
+<span class:list={["tag", className]}><slot /></span>
+
+<style>
+  .tag {
+    font-size: 0.66rem;
+    font-weight: 600;
+    letter-spacing: 0.05em;
+    text-transform: uppercase;
+    color: var(--color-mint);
+    border: 1px solid rgba(189, 248, 213, 0.25);
+    border-radius: 30px;
+    padding: 4px 10px;
+    background: rgba(44, 167, 122, 0.08);
+  }
+</style>

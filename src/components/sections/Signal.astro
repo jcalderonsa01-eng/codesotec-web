@@ -1,0 +1,73 @@
+---
+import Button from "@/components/ui/Button.astro";
+---
+
+<section class="section signal" id="services">
+  <div class="wrap">
+    <div class="idx" data-reveal style="margin-bottom:22px">(02) — What we believe</div>
+    <h2 class="big" data-signal>
+      <span class="reveal-line"><span>In a world of</span></span>
+      <span class="reveal-line"><span>digital noise, we</span></span>
+      <span class="reveal-line"><span>create <em>signal.</em></span></span>
+    </h2>
+    <p data-reveal data-d="2">We cut through the chaos with strategic clarity and creative courage — turning passive viewers into active participants in your brand's journey.</p>
+    <div class="cta-row" data-reveal data-d="3">
+      <Button magnetic>Start a project</Button>
+      <Button variant="ghost" href="#contact" magnetic>Learn more</Button>
+    </div>
+  </div>
+</section>
+
+<style>
+  .signal {
+    text-align: center;
+    position: relative;
+    overflow: hidden;
+    padding-block: clamp(72px, 11vw, 150px);
+  }
+  .big {
+    font-weight: 900;
+    letter-spacing: -0.04em;
+    line-height: 1.02;
+    font-size: clamp(2.4rem, 7vw, 6rem);
+    max-width: 16ch;
+    margin: 0 auto;
+  }
+  .big em {
+    font-style: italic;
+    font-weight: 200;
+    color: var(--color-accent-bright);
+  }
+  .signal p {
+    max-width: 54ch;
+    margin: 30px auto 0;
+    color: var(--color-muted);
+    font-size: clamp(1rem, 1.5vw, 1.18rem);
+    line-height: 1.6;
+  }
+  .cta-row {
+    display: flex;
+    gap: 14px;
+    justify-content: center;
+    margin-top: 40px;
+    flex-wrap: wrap;
+  }
+  .reveal-line {
+    display: block;
+    overflow: hidden;
+  }
+  .reveal-line > span {
+    display: block;
+    transform: translateY(105%);
+    transition: transform 0.9s var(--ease-brand);
+  }
+  .in .reveal-line > span {
+    transform: translateY(0);
+  }
+  .idx {
+    font-family: var(--font-mono);
+    font-size: 0.74rem;
+    letter-spacing: 0.18em;
+    color: var(--color-accent-bright);
+  }
+</style>

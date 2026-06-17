@@ -1,0 +1,25 @@
+/* ============================================================
+   Utilidades personalizadas (Tailwind v4 @utility)
+   Disponibles como clases en el markup: class="px-fluid border-hair".
+   ============================================================ */
+
+/* padding horizontal fluido, alineado al contenedor del sitio */
+@utility px-fluid {
+  padding-inline: var(--pad);
+}
+
+/* bordes finos sobre fondo oscuro (rgba blanco) */
+@utility border-hair {
+  border-color: var(--border);
+}
+@utility border-hair-soft {
+  border-color: var(--border-soft);
+}
+
+/* texto con relleno en gradiente (wordmark / números de stats) */
+@utility text-gradient {
+  background-clip: text;
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+  color: transparent;
+}

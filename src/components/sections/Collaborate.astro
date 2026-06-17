@@ -1,0 +1,99 @@
+---
+import Marquee from "@/components/ui/Marquee.astro";
+import { SITE } from "@/data/site.config";
+
+const trackContent = Array.from({ length: 6 }, (_, i) =>
+  `<span class="it${i % 2 ? " outline" : ""}">Let's collaborate</span>`,
+).join("");
+---
+
+<section class="collab" id="contact">
+  <div class="glow"></div>
+  <div class="inner">
+    <p class="fit" data-reveal>Let's see if we are a good fit</p>
+    <Marquee class="collab-marquee" speed={24} masked>
+      <Fragment set:html={trackContent} />
+    </Marquee>
+    <a class="mail" href={`mailto:${SITE.email}`} data-magnetic>
+      <span class="mdot" aria-hidden="true"></span>
+      {SITE.email}
+    </a>
+  </div>
+</section>
+
+<style>
+  .collab {
+    position: relative;
+    text-align: center;
+    padding-block: clamp(80px, 12vw, 170px);
+    overflow: hidden;
+  }
+  .glow {
+    position: absolute;
+    left: 50%;
+    top: 50%;
+    width: 70vw;
+    height: 70vw;
+    transform: translate(-50%, -50%);
+    background: radial-gradient(circle, rgba(44, 167, 122, 0.22), transparent 60%);
+    filter: blur(40px);
+    z-index: 0;
+  }
+  .inner {
+    position: relative;
+    z-index: 2;
+  }
+  .fit {
+    font-weight: 200;
+    font-size: clamp(1rem, 1.6vw, 1.25rem);
+    color: var(--color-muted);
+    letter-spacing: 0.04em;
+    margin-bottom: 18px;
+  }
+  .collab-marquee :global(.it) {
+    font-weight: 900;
+    letter-spacing: -0.04em;
+    font-size: clamp(2.6rem, 9vw, 8rem);
+    text-transform: uppercase;
+    padding-inline: 30px;
+    display: inline-flex;
+    align-items: center;
+    gap: 30px;
+  }
+  .collab-marquee :global(.it::after) {
+    content: "";
+    width: 0.42em;
+    height: 0.42em;
+    border-radius: 50%;
+    background: var(--color-accent-bright);
+    display: inline-block;
+  }
+  .collab-marquee :global(.it.outline) {
+    color: transparent;
+    -webkit-text-stroke: 1.4px rgba(255, 255, 255, 0.32);
+  }
+  .mail {
+    display: inline-flex;
+    align-items: center;
+    gap: 12px;
+    font-size: clamp(1.05rem, 2vw, 1.5rem);
+    font-weight: 600;
+    border: 1px solid var(--border);
+    border-radius: 40px;
+    padding: 16px 30px;
+    transition: 0.4s var(--ease-brand);
+    margin-top: 30px;
+  }
+  .mail:hover {
+    background: var(--color-accent-bright);
+    color: #000;
+    border-color: var(--color-accent-bright);
+  }
+  .mdot {
+    width: 8px;
+    height: 8px;
+    border-radius: 50%;
+    background: var(--color-accent-bright);
+    display: inline-block;
+  }
+</style>

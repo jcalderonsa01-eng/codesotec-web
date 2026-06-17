@@ -1,0 +1,51 @@
+---
+import Marquee from "@/components/ui/Marquee.astro";
+import { CHAOS } from "@/data/chaos";
+
+const items = CHAOS.map(
+  (phrase) =>
+    `<span class="item">${phrase} <span class="star" aria-hidden="true">&#10033;</span></span>`,
+).join("");
+---
+
+<div class="banner">
+  <Marquee class="ticker" speed={38} ariaHidden>
+    <Fragment set:html={items} />
+  </Marquee>
+</div>
+
+<style>
+  .banner {
+    background: #0d0f0e;
+    border-block: 1px solid rgba(255, 255, 255, 0.178);
+    padding-block: 24px;
+  }
+  .ticker {
+    padding: 0;
+  }
+  :global(.ticker .item) {
+    display: inline-flex;
+    align-items: center;
+    gap: 32px;
+    padding-inline: 40px;
+    margin-right: 80px;
+    font-size: 1.125rem;
+    font-weight: 700;
+    letter-spacing: -0.02em;
+    color: var(--color-muted);
+    white-space: nowrap;
+  }
+  :global(.ticker .star) {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 0.9em;
+    width: 1.1em;
+    height: 1.1em;
+    color: transparent;
+    background: linear-gradient(135deg, #22abcf, #a077f0);
+    background-clip: text;
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
+  }
+</style>
