@@ -1,51 +1,109 @@
 ---
 const areas = [
-  "Desarrollo",
-  "Infraestructura",
+  "Equipamiento",
+  "Outsourcing y Leasing",
   "Ciberseguridad",
-  "Consultoría",
-  "Automatización",
-  "IA & Datos",
-  "IoT",
-  "Soporte",
+  "Software",
+  "Soluciones Cloud",
+  "Infraestructura de Tecnología",
+  "Mantenimiento de equipos",
+  "Servicios profesionales",
+];
+
+const videoFiles = [
+  "videos_negocio/equipamiento.mp4",
+  "videos_negocio/outsourcing_leasing.mp4",
+  "videos_negocio/Ciberseguridad.mp4",
+  "videos_negocio/software.mp4",
+  "videos_negocio/soluciones_cloud.mp4",
+  "videos_negocio/infraestructura_de_tecnologia.mp4",
+  "videos_negocio/mantenimiento_equipos.mp4",
+  "videos_negocio/servicios_profesionales.mp4",
 ];
 
 const cells = [
-  { x: 0, y: 0, w: 300, h: 200, label: { x: 10, y: 190 }, fs: 10 },
-  { x: 300, y: 0, w: 600, h: 200, label: { x: 310, y: 190 }, fs: 10 },
-  { x: 0, y: 200, w: 300, h: 200, label: { x: 10, y: 390 }, fs: 10 },
-  { x: 300, y: 200, w: 300, h: 200, label: { x: 310, y: 390 }, fs: 10 },
-  { x: 600, y: 200, w: 300, h: 200, label: { x: 610, y: 390 }, fs: 10 },
-  { x: 0, y: 400, w: 450, h: 200, label: { x: 10, y: 590 }, fs: 10 },
-  { x: 450, y: 400, w: 450, h: 200, label: { x: 460, y: 590 }, fs: 10 },
-  { x: 0, y: 600, w: 900, h: 200, label: { x: 10, y: 790 }, fs: 10 },
+  { x: 0, y: 0, w: 300, h: 280, label: { x: 10, y: 270 }, fs: 10 },
+  { x: 300, y: 0, w: 600, h: 280, label: { x: 310, y: 270 }, fs: 10 },
+  { x: 0, y: 280, w: 300, h: 280, label: { x: 10, y: 550 }, fs: 10 },
+  { x: 300, y: 280, w: 300, h: 280, label: { x: 310, y: 550 }, fs: 10 },
+  { x: 600, y: 280, w: 300, h: 280, label: { x: 610, y: 550 }, fs: 10 },
+  { x: 0, y: 560, w: 450, h: 280, label: { x: 10, y: 830 }, fs: 10 },
+  { x: 450, y: 560, w: 450, h: 280, label: { x: 460, y: 830 }, fs: 10 },
+  { x: 0, y: 840, w: 900, h: 280, label: { x: 10, y: 1110 }, fs: 10 },
 ];
 ---
 
 <section class="section" id="work">
   <div class="wrap">
     <h1 class="section-title" data-reveal>Áreas de negocio</h1>
-    <div class="mosaic-wrap">
-      <svg
-        class="mosaic"
-        viewBox="0 0 900 800"
-        fill="none"
-        stroke="#A6A6A6"
-        stroke-width="0.5"
-        xmlns="http://www.w3.org/2000/svg"
-      >
-        <defs>
-          <clipPath id="rounded">
-            <rect width="900" height="800" rx="6"></rect>
-          </clipPath>
-        </defs>
-        <g clip-path="url(#rounded)">
-          {cells.map((c) => <rect x={c.x} y={c.y} width={c.w} height={c.h} />)}
-        </g>
-        <rect width="900" height="800" rx="6" stroke="#A6A6A6" stroke-width="0.5" fill="none"
-        ></rect>
-        {
-          cells.map((c, i) => (
+  </div>
+  <div class="mosaic-wrap">
+    <svg
+      class="mosaic"
+      viewBox="0 0 900 1120"
+      fill="none"
+      stroke="#A6A6A6"
+      stroke-width="0.5"
+      xmlns="http://www.w3.org/2000/svg"
+    >
+      <defs>
+        <clipPath id="rounded">
+          <rect width="900" height="1120" rx="6"></rect>
+        </clipPath>
+      </defs>
+      <g clip-path="url(#rounded)">
+        {cells.map((c) => <rect x={c.x} y={c.y} width={c.w} height={c.h} />)}
+      </g>
+      {
+        [1, 2, 3, 4, 5, 6, 7].map((idx) => (
+          <foreignObject
+            x={cells[idx].x}
+            y={cells[idx].y}
+            width={cells[idx].w}
+            height={cells[idx].h}
+          >
+            <div
+              class={`video-cell${idx === 1 ? " rounded-tr" : ""}${idx === 7 ? " rounded-br rounded-bl" : ""}`}
+              data-video-cell
+            >
+              <video
+                src={`/${videoFiles[idx]}`}
+                muted
+                loop
+                playsinline
+                preload="none"
+                class="video-bg"
+              />
+              <div class="cell-vignette" />
+              <div class="cell-overlay">
+                <span class="cell-title-center">{areas[idx]}</span>
+                <div class="cell-bottom">
+                  <span class="cell-title-bottom">{areas[idx]}</span>
+                  <p class="cell-desc">
+                    {idx === 2
+                      ? "En el mundo digital actual, la ciberseguridad no es una opción, es una necesidad. Protege tu información confidencial, la continuidad de tu negocio y la confianza de tus clientes con nuestras soluciones integrales de ciberseguridad"
+                      : idx === 1
+                        ? "Optimiza tu inversión y enfócate en tu negocio principal. Alquila Portátiles, Computadoras de Escritorio y todas las necesidades de TI para tu Empresa."
+                        : idx === 3
+                          ? "Te ofrecemos soluciones de software innovadoras y a medida para optimizar tus procesos, impulsar la productividad y alcanzar tus objetivos de negocio. Descubre nuestra gama de software diseñado para satisfacer las necesidades de empresas modernas."
+                          : idx === 4
+                            ? "Descubre cómo nuestras soluciones cloud pueden optimizar tu infraestructura, mejorar tu eficiencia y potenciar tu crecimiento. Accede a la tecnología del futuro hoy mismo."
+                            : idx === 5
+                              ? "Te ayudamos a modernizar tu infraestructura tecnológica y a adoptar las últimas innovaciones para impulsar tu negocio hacia el futuro."
+                              : idx === 6
+                                ? "Evita costosas averías y garantiza la continuidad operativa de tu negocio con nuestros servicios profesionales de mantenimiento de equipos y cómputo. Un mantenimiento preventivo regular es clave para optimizar el rendimiento, prolongar la vida útil de tus dispositivos y minimizar los tiempos de inactividad."
+                                : "Ponemos a tu disposición un equipo de profesionales altamente capacitados y con amplia experiencia en diversas áreas tecnológicas. Nuestros servicios profesionales están diseñados para ayudarte a alcanzar tus objetivos de negocio, optimizar tus operaciones y superar tus desafíos tecnológicos."}
+                  </p>
+                </div>
+              </div>
+            </div>
+          </foreignObject>
+        ))
+      }
+      <rect width="900" height="1120" rx="6" stroke="#A6A6A6" stroke-width="0.5" fill="none"></rect>
+      {
+        cells.map((c, i) =>
+          [1, 2, 3, 4, 5, 6, 7].includes(i) ? null : (
             <text
               x={c.label.x}
               y={c.label.y}
@@ -56,10 +114,10 @@ const cells = [
             >
               {areas[i]}
             </text>
-          ))
-        }
-      </svg>
-    </div>
+          ),
+        )
+      }
+    </svg>
   </div>
 </section>
 
@@ -69,9 +127,8 @@ const cells = [
     position: relative;
   }
   .mosaic-wrap {
-    max-width: 3600px;
-    margin: 0 auto;
     width: 100%;
+    padding-inline: clamp(20px, 5vw, 40px);
   }
   .mosaic {
     width: 100%;
@@ -88,4 +145,153 @@ const cells = [
   .area-label {
     font-family: var(--font-sans);
   }
+  .video-cell {
+    position: relative;
+    width: 100%;
+    height: 100%;
+    overflow: hidden;
+  }
+  .rounded-tr {
+    border-top-right-radius: 6px;
+  }
+  .rounded-bl {
+    border-bottom-left-radius: 6px;
+  }
+  .rounded-br {
+    border-bottom-right-radius: 6px;
+  }
+  .video-bg {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    filter: blur(8px);
+    transition: filter 0.4s ease;
+    display: block;
+  }
+  .video-cell:hover .video-bg {
+    filter: blur(0);
+  }
+  .cell-vignette {
+    position: absolute;
+    inset: 0;
+    z-index: 1;
+    background: linear-gradient(
+      to top,
+      rgba(0, 0, 0, 0.92) 0%,
+      rgba(0, 0, 0, 0.3) 60%,
+      transparent 80%
+    );
+    opacity: 0;
+    transition: opacity 0.4s ease;
+    pointer-events: none;
+  }
+  .video-cell:hover .cell-vignette {
+    opacity: 1;
+  }
+  .cell-overlay {
+    position: absolute;
+    inset: 0;
+    z-index: 2;
+    pointer-events: none;
+  }
+  .cell-title-center {
+    position: absolute;
+    left: 50%;
+    top: 50%;
+    transform: translate(-50%, -50%);
+    opacity: 1;
+    transition:
+      opacity 0.35s ease,
+      transform 0.5s cubic-bezier(0.4, 0, 0.2, 1);
+    color: #fff;
+    font-family: var(--font-sans);
+    font-weight: 700;
+    font-size: clamp(1.05rem, 2.4vw, 1.6rem);
+    letter-spacing: -0.02em;
+    white-space: nowrap;
+    text-shadow: 0 2px 8px rgba(0, 0, 0, 0.5);
+  }
+  .video-cell:hover .cell-title-center {
+    opacity: 0;
+    transform: translate(-50%, calc(-50% + 50px));
+  }
+  .cell-bottom {
+    position: absolute;
+    left: 10px;
+    right: 10px;
+    bottom: 10px;
+    display: flex;
+    flex-direction: column;
+    gap: 4px;
+  }
+  .cell-title-bottom {
+    color: #fff;
+    font-family: var(--font-sans);
+    font-weight: 700;
+    font-size: clamp(0.85rem, 1.8vw, 1.2rem);
+    letter-spacing: -0.02em;
+    white-space: nowrap;
+    opacity: 0;
+    transform: translateY(8px);
+    transition:
+      opacity 0.35s ease,
+      transform 0.5s cubic-bezier(0.4, 0, 0.2, 1);
+    text-shadow: 0 2px 8px rgba(0, 0, 0, 0.5);
+  }
+  .video-cell:hover .cell-title-bottom {
+    opacity: 1;
+    transform: translateY(0);
+  }
+  .cell-desc {
+    color: #ccc;
+    font-family: var(--font-sans);
+    font-size: clamp(0.45rem, 0.9vw, 0.65rem);
+    line-height: 1.4;
+    margin: 0;
+    opacity: 0;
+    transition: opacity 0.35s ease;
+    text-shadow: 0 1px 4px rgba(0, 0, 0, 0.6);
+  }
+  .video-cell:hover .cell-desc {
+    opacity: 1;
+  }
 </style>
+
+<script>
+  const section = document.getElementById("work");
+  const videoCells = section?.querySelectorAll("[data-video-cell]");
+
+  if (section && videoCells) {
+    const videos = Array.from(videoCells)
+      .map((el) => el.querySelector("video"))
+      .filter((v): v is HTMLVideoElement => v !== null);
+    const observer = new IntersectionObserver(
+      (entries) => {
+        for (const entry of entries) {
+          if (entry.isIntersecting) {
+            videos.forEach((v) => {
+              v.preload = "auto";
+              v.load();
+            });
+            observer.disconnect();
+          }
+        }
+      },
+      { rootMargin: "200px" },
+    );
+    observer.observe(section);
+
+    videoCells.forEach((cell) => {
+      const video = cell.querySelector("video");
+      if (!video) return;
+      cell.addEventListener("mouseenter", () => {
+        video.currentTime = 0;
+        video.play();
+      });
+      cell.addEventListener("mouseleave", () => {
+        video.pause();
+        video.currentTime = 0;
+      });
+    });
+  }
+</script>
