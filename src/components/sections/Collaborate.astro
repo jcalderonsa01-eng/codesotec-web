@@ -21,13 +21,13 @@ const track = Array.from({ length: 2 }, () => items).join(" · ");
   .capsule {
     overflow: hidden;
     white-space: nowrap;
-    border-radius: 999px;
+    border-radius: 12px;
     padding: 0 32px;
     background: rgba(255, 255, 255, 0.04);
     backdrop-filter: blur(12px);
     -webkit-backdrop-filter: blur(12px);
     border: 1px solid rgba(255, 255, 255, 0.08);
-    transition: box-shadow 0.4s ease;
+    transition: box-shadow 0.4s ease, border-radius 0.4s ease;
     position: relative;
     max-width: 95vw;
   }
