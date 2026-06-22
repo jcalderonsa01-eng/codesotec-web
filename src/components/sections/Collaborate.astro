@@ -8,7 +8,7 @@ const track = Array.from({ length: 2 }, () => items).join(" · ");
 <section class="collab" id="contact">
   <div class="capsule" data-reveal>
     <div class="carousel-track">
-      <span set:html={track}></span>
+      <span set:html={track} />
     </div>
   </div>
   <div class="cta" data-reveal data-d="1">
@@ -21,7 +21,7 @@ const track = Array.from({ length: 2 }, () => items).join(" · ");
 
 <style>
   .collab {
-    padding-block: clamp(80px, 12vw, 170px);
+    padding-block: clamp(80px, 12vw, 150px);
     display: flex;
     flex-direction: column;
     justify-content: center;
@@ -37,7 +37,9 @@ const track = Array.from({ length: 2 }, () => items).join(" · ");
     backdrop-filter: blur(12px);
     -webkit-backdrop-filter: blur(12px);
     border: 1px solid rgba(255, 255, 255, 0.08);
-    transition: box-shadow 0.4s ease, border-radius 0.4s ease;
+    transition:
+      box-shadow 0.4s ease,
+      border-radius 0.4s ease;
     position: relative;
     max-width: 95vw;
   }

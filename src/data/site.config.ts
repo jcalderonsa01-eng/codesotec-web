@@ -13,7 +13,7 @@ export const SITE: SiteConfig = {
   phone: "+(51) 997441958",
   phoneHref: "tel:+51997441958",
   address: "Calle Ficaria 3856 - Urbanización Las Palmeras, Los Olivos",
-  phones: ["+(51) 997441958", "+(51) 979 890 845", "(01)7702212"],
+  phones: ["+(51) 997441958", "+(51) 979 890 845", "(01) 7702212"],
   schedule: "Lunes - Sábados · 9.00 hrs - 19.00 hrs",
 
   languages: [

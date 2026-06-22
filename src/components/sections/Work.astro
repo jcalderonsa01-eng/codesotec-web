@@ -66,7 +66,7 @@ const businessAreas = [
       {
         businessAreas.map((item) => (
           <article class="work-card" data-work-card style={`grid-area: ${item.gridArea}`}>
-            <video src={`/${item.video}`} muted loop playsinline preload="none" class="video-bg" />
+            <video src={`/${item.video}`} poster={`/videos_negocio/posters/${item.video.replace("videos_negocio/", "").replace(".mp4", ".jpg")}`} muted loop playsinline preload="none" class="video-bg" />
             <div class="card-overlay">
               <span class="card-eyebrow">Área de negocio</span>
               <h3>{item.title}</h3>
@@ -112,7 +112,8 @@ const businessAreas = [
       filter 0.35s ease,
       opacity 0.35s ease,
       box-shadow 0.35s ease;
-    transform: translateZ(0);
+    content-visibility: auto;
+    contain: content;
   }
   .work-card.active {
     transform: scale(1.04);
@@ -120,8 +121,8 @@ const businessAreas = [
     box-shadow: 0 36px 80px rgba(0, 0, 0, 0.35);
   }
   .cards-grid.has-hover .work-card:not(.active) {
-    filter: blur(4px) brightness(0.78);
-    opacity: 0.6;
+    opacity: 0.35;
+    transform: scale(0.97);
   }
   .work-card[style] {
     display: block;
@@ -136,7 +137,6 @@ const businessAreas = [
     transition:
       filter 0.35s ease,
       transform 0.45s ease;
-    will-change: transform, filter;
   }
   @media (hover: hover) {
     .video-bg {
@@ -146,6 +146,7 @@ const businessAreas = [
   .work-card.active .video-bg {
     filter: grayscale(0%) contrast(1.05) brightness(0.92);
     transform: scale(1.12);
+    will-change: transform, filter;
   }
   .card-overlay {
     position: absolute;
@@ -169,7 +170,7 @@ const businessAreas = [
     margin: 0;
     color: #fff;
     font-family: var(--font-sans);
-    font-weight: 800;
+    font-weight: 600;
     font-size: clamp(1.395rem, 2.07vw, 2.52rem);
     line-height: 1.05;
   }
@@ -182,7 +183,7 @@ const businessAreas = [
     max-width: 40rem;
   }
   .section-title {
-    font-weight: 900;
+    font-weight: 700;
     letter-spacing: -0.035em;
     line-height: 1.5;
     font-size: clamp(2.4rem, 6.5vw, 5.5rem);
@@ -225,29 +226,25 @@ const businessAreas = [
 </style>
 
 <script>
-  const section = document.getElementById("work");
-  const grid = section?.querySelector("[data-work-grid]");
+  const grid = document.querySelector("[data-work-grid]");
   const cards = grid?.querySelectorAll("[data-work-card]");
-  const videos = Array.from(cards ?? [])
-    .map((card) => card.querySelector("video"))
-    .filter((v): v is HTMLVideoElement => v !== null);
 
-  if (grid) {
-    const observer = new IntersectionObserver(
-      (entries) => {
-        if (entries.some((entry) => entry.isIntersecting)) {
-          videos.forEach((video) => {
-            video.preload = "auto";
-            video.load();
-          });
-          observer.disconnect();
+  cards?.forEach((card) => {
+    const video = card.querySelector("video");
+    if (!video) return;
+
+    const obs = new IntersectionObserver(
+      ([entry]) => {
+        if (entry.isIntersecting) {
+          video.preload = "auto";
+          video.load();
+          obs.unobserve(card);
         }
       },
-      { rootMargin: "200px" },
+      { rootMargin: "400px" },
     );
-
-    observer.observe(grid);
-  }
+    obs.observe(card);
+  });
 
   cards?.forEach((card) => {
     const video = card.querySelector("video");

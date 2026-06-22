@@ -8,20 +8,31 @@ import { SITE } from "@/data/site.config";
       <a href="#top" aria-label="Codesotec home">
         <img src="/logo.png" alt="Codesotec" class="foot-logo" />
       </a>
-      <div class="ci">
-        {SITE.address}<br />
-        {SITE.phones.map((p, i) => (
-          <>{i > 0 && " · "}{p}</>
-        ))}<br />
-        <a href={`mailto:${SITE.email}`}>{SITE.email}</a><br />
-        {SITE.schedule}
+      <div class="foot-columns">
+        <div class="foot-col">
+          <span class="foot-label">Dirección</span>
+          {SITE.address}
+        </div>
+        <div class="foot-col">
+          <span class="foot-label">Teléfonos</span>
+          {
+            SITE.phones.map((p) => (
+              <>
+                {p}
+                <br />
+              </>
+            ))
+          }
+        </div>
+        <div class="foot-col">
+          <span class="foot-label">Email</span>
+          <a href={`mailto:${SITE.email}`}>{SITE.email}</a>
+        </div>
+        <div class="foot-col">
+          <span class="foot-label">Horario</span>
+          {SITE.schedule.split(" · ")[0]}<br />{SITE.schedule.split(" · ")[1]}
+        </div>
       </div>
-    </div>
-
-    <div class="foot-legal">
-      {SITE.legal.map((link) => (
-        <a href={link.href}>{link.label}</a>
-      ))}
     </div>
 
     <div class="giant" aria-hidden="true">{SITE.brand.name}</div>
@@ -44,14 +55,43 @@ import { SITE } from "@/data/site.config";
     width: auto;
     display: block;
   }
-  .foot-brand .ci {
+  .foot-columns {
+    display: grid;
+    grid-template-columns: repeat(4, 1fr);
+    gap: 60px;
+    margin-top: 20px;
     color: var(--color-muted);
     font-size: 0.95rem;
     line-height: 1.9;
-    margin-top: 20px;
   }
-  .foot-brand .ci a:hover {
+  .foot-col {
+    display: flex;
+    flex-direction: column;
+  }
+  .foot-label {
+    font-weight: 600;
+    font-size: 0.8rem;
+    letter-spacing: 0.06em;
+    text-transform: uppercase;
+    color: var(--color-faint);
+    margin-bottom: 6px;
+  }
+  .foot-col a {
+    color: var(--color-muted);
+  }
+  .foot-col a:hover {
     color: var(--color-accent-bright);
+  }
+
+  @media (max-width: 720px) {
+    .foot-columns {
+      grid-template-columns: repeat(2, 1fr);
+    }
+  }
+  @media (max-width: 420px) {
+    .foot-columns {
+      grid-template-columns: 1fr;
+    }
   }
   .foot-legal {
     display: flex;

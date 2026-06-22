@@ -79,7 +79,9 @@ const track = Array.from({ length: 2 }, () => cards).join("");
 
 <section class="section" id="reviews">
   <div class="wrap">
-    <h2 class="section-title" data-reveal>Las secuelas de lo asombroso</h2>
+    <h2 class="section-title" data-reveal>
+      Las secuelas<br />de lo <span class="fancy">asombroso</span>
+    </h2>
   </div>
   <div class="carousel-wrap">
     <div class="carousel-track" set:html={track} />
@@ -92,15 +94,21 @@ const track = Array.from({ length: 2 }, () => cards).join("");
     position: relative;
   }
   .section-title {
-    font-weight: 900;
+    font-weight: 700;
+    color: #fff;
     letter-spacing: -0.035em;
     line-height: 1;
     font-size: clamp(2.4rem, 6.5vw, 5.5rem);
     margin-bottom: clamp(34px, 5vw, 64px);
-    background: linear-gradient(90deg, #22ABCF, #F2F0F1, #A077F0);
+  }
+  .fancy {
+    font-weight: 700;
+    background: linear-gradient(90deg, #22abcf, #a077f0);
     -webkit-background-clip: text;
     -webkit-text-fill-color: transparent;
     background-clip: text;
+    font-style: italic;
+    font-family: serif;
   }
   .carousel-wrap {
     width: 100%;
