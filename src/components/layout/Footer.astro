@@ -1,56 +1,33 @@
 ---
-import { SITE, FOOTER_MENU } from "@/data/site.config";
-import Brand from "@/components/ui/Brand.astro";
-
-/** Pie del sitio: contacto, columnas de enlaces, wordmark gigante y legal. */
-const columns = [
-  { title: "Menu", links: FOOTER_MENU },
-  { title: "Social", links: SITE.social },
-  { title: "Legal", links: SITE.legal },
-];
+import { SITE } from "@/data/site.config";
 ---
 
 <footer>
   <div class="wrap">
-    <div class="foot-top">
-      <div class="foot-brand">
-        <Brand href="#top" large />
-        <div class="ci">
-          <a href={`mailto:${SITE.email}`}>{SITE.email}</a><br />
-          <a href={SITE.phoneHref}>{SITE.phone}</a><br />
-          {SITE.address}
-        </div>
+    <div class="foot-brand">
+      <a href="#top" aria-label="Codesotec home">
+        <img src="/logo.png" alt="Codesotec" class="foot-logo" />
+      </a>
+      <div class="ci">
+        {SITE.address}<br />
+        {SITE.phones.map((p, i) => (
+          <>{i > 0 && " · "}{p}</>
+        ))}<br />
+        <a href={`mailto:${SITE.email}`}>{SITE.email}</a><br />
+        {SITE.schedule}
       </div>
+    </div>
 
-      {
-        columns.map((col) => (
-          <div class="foot-col">
-            <h4>{col.title}</h4>
-            <ul>
-              {col.links.map((link) => (
-                <li>
-                  <a
-                    href={link.href}
-                    target={link.external ? "_blank" : undefined}
-                    rel={link.external ? "noopener noreferrer" : undefined}
-                  >
-                    {link.label}
-                  </a>
-                </li>
-              ))}
-            </ul>
-          </div>
-        ))
-      }
+    <div class="foot-legal">
+      {SITE.legal.map((link) => (
+        <a href={link.href}>{link.label}</a>
+      ))}
     </div>
 
     <div class="giant" aria-hidden="true">{SITE.brand.name}</div>
 
     <div class="foot-bottom">
       <div class="cp">{SITE.copyright}</div>
-      <div class="legal">
-        {SITE.legal.map((link) => <a href={link.href}>{link.label}</a>)}
-      </div>
     </div>
   </div>
 </footer>
@@ -58,14 +35,14 @@ const columns = [
 <style>
   footer {
     border-top: 1px solid var(--border);
-    background: var(--color-bg-2);
+    background: #050505;
     padding-block: clamp(56px, 8vw, 90px) 36px;
     overflow: hidden;
   }
-  .foot-top {
-    display: grid;
-    grid-template-columns: 1.6fr 1fr 1fr 1fr;
-    gap: 40px;
+  .foot-logo {
+    height: 34px;
+    width: auto;
+    display: block;
   }
   .foot-brand .ci {
     color: var(--color-muted);
@@ -76,28 +53,19 @@ const columns = [
   .foot-brand .ci a:hover {
     color: var(--color-accent-bright);
   }
-  .foot-col h4 {
-    font-size: 0.72rem;
-    letter-spacing: 0.18em;
-    text-transform: uppercase;
-    color: var(--color-faint);
-    margin-bottom: 18px;
-    font-weight: 600;
-  }
-  .foot-col ul {
-    list-style: none;
+  .foot-legal {
     display: flex;
-    flex-direction: column;
-    gap: 11px;
+    gap: 24px;
+    flex-wrap: wrap;
+    margin-top: 32px;
   }
-  .foot-col a {
-    color: var(--color-muted);
-    font-size: 0.95rem;
+  .foot-legal a {
+    color: var(--color-faint);
+    font-size: 0.84rem;
     transition: color 0.3s;
-    width: fit-content;
   }
-  .foot-col a:hover {
-    color: var(--color-fg);
+  .foot-legal a:hover {
+    color: var(--color-muted);
   }
   .giant {
     font-weight: 900;
@@ -127,18 +95,6 @@ const columns = [
     border-top: 1px solid var(--border-soft);
     flex-wrap: wrap;
   }
-  .legal {
-    display: flex;
-    gap: 24px;
-    flex-wrap: wrap;
-  }
-  .legal a {
-    color: var(--color-faint);
-    font-size: 0.84rem;
-  }
-  .legal a:hover {
-    color: var(--color-muted);
-  }
   .cp {
     color: var(--color-faint);
     font-size: 0.84rem;
@@ -146,14 +102,6 @@ const columns = [
     letter-spacing: 0.02em;
   }
 
-  @media (max-width: 1024px) {
-    .foot-top {
-      grid-template-columns: 1fr 1fr;
-    }
-    .foot-brand {
-      grid-column: 1 / -1;
-    }
-  }
   @media (max-width: 520px) {
     .foot-bottom {
       flex-direction: column;

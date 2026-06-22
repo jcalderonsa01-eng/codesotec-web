@@ -16,12 +16,6 @@
     transform: translate(-7vw, -4vh) scale(1.1);
   }
 }
-@keyframes drift3 {
-  50% {
-    transform: translate(5vw, -8vh) scale(1.2);
-  }
-}
-
 /* grano / ruido animado */
 @keyframes grain {
   0% {
@@ -55,19 +49,6 @@
 @keyframes load {
   to {
     width: 100%;
-  }
-}
-
-/* indicador de scroll del hero */
-@keyframes cue {
-  0%,
-  100% {
-    transform: scaleY(0.4);
-    opacity: 0.3;
-  }
-  50% {
-    transform: scaleY(1);
-    opacity: 1;
   }
 }
 

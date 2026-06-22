@@ -4,10 +4,10 @@ import { createHeroIntro } from "./heroIntro";
 import { createNavScroll } from "./navScroll";
 import { createMobileMenu } from "./mobileMenu";
 import { createReveal } from "./reveal";
-import { createSignalReveal } from "./signalReveal";
-import { createCounters } from "./counters";
+import { createSignalPrinciples } from "./signalPrinciples";
 import { createHeroParallax } from "./heroParallax";
 import { createMagnetic } from "./magnetic";
+import { createCursor } from "./cursor";
 
 /**
  * Único punto de extensión de la capa de animación.
@@ -20,8 +20,8 @@ export const animationRegistry: readonly AnimationFactory[] = [
   createNavScroll,
   createMobileMenu,
   createReveal,
-  createSignalReveal,
-  createCounters,
+  createSignalPrinciples,
   createHeroParallax,
   createMagnetic,
+  createCursor,
 ];

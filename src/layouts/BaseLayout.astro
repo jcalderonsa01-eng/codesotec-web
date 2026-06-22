@@ -21,7 +21,7 @@ const pageDesc =
 ---
 
 <!doctype html>
-<html lang="en">
+<html lang="es">
   <head>
     <meta charset="utf-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1" />
@@ -36,11 +36,16 @@ const pageDesc =
     <link rel="icon" type="image/png" href="/logo.png" />
   </head>
   <body>
+    <a href="#main-content" class="skip-link">Saltar al contenido principal</a>
     <div class="bg-overlay" aria-hidden="true"></div>
     <Preloader />
     <Navbar />
     <MobileMenu />
-    <slot />
+    <div data-cursor-dot aria-hidden="true"></div>
+    <div data-cursor-ring aria-hidden="true"></div>
+    <main id="main-content" tabindex="-1">
+      <slot />
+    </main>
     <Footer />
 
     <script>

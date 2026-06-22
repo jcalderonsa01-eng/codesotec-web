@@ -46,8 +46,8 @@ export const createCursor: AnimationFactory = (): Animation => ({
 
     // GSAP quickTo: anima un proxy {x,y} y aplicamos el transform en onUpdate.
     // Fallback: si GSAP no está, escribir transform directo (sin lag).
-    let ringX: (n: number) => void = (n) => placeRing(n, parseFloat(ring.dataset.y ?? initY));
-    let ringY: (n: number) => void = (n) => placeRing(parseFloat(ring.dataset.x ?? initX), n);
+    let ringX: (n: number) => void = (n) => placeRing(n, parseFloat(ring.dataset.y ?? String(initY)));
+    let ringY: (n: number) => void = (n) => placeRing(parseFloat(ring.dataset.x ?? String(initX)), n);
 
     if (gsap?.quickTo) {
       const ringProxy = { x: initX, y: initY };

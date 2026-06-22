@@ -1,13 +1,21 @@
 ---
+import { SITE } from "@/data/site.config";
+
 const items = Array.from({ length: 10 }, () => "Trabajemos juntos").join(" · ");
 const track = Array.from({ length: 2 }, () => items).join(" · ");
 ---
 
 <section class="collab" id="contact">
-  <div class="capsule">
+  <div class="capsule" data-reveal>
     <div class="carousel-track">
       <span set:html={track}></span>
     </div>
+  </div>
+  <div class="cta" data-reveal data-d="1">
+    <a href={`mailto:${SITE.email}`} class="cta-btn">
+      <span class="cta-dot" aria-hidden="true"></span>
+      {SITE.email}
+    </a>
   </div>
 </section>
 
@@ -15,8 +23,10 @@ const track = Array.from({ length: 2 }, () => items).join(" · ");
   .collab {
     padding-block: clamp(80px, 12vw, 170px);
     display: flex;
+    flex-direction: column;
     justify-content: center;
     align-items: center;
+    gap: 40px;
   }
   .capsule {
     overflow: hidden;
@@ -48,5 +58,40 @@ const track = Array.from({ length: 2 }, () => items).join(" · ");
     to {
       transform: translateX(-50%);
     }
+  }
+  .cta {
+    display: flex;
+    justify-content: center;
+  }
+  .cta-btn {
+    display: inline-flex;
+    align-items: center;
+    gap: 12px;
+    padding: 16px 36px;
+    border-radius: 40px;
+    background: var(--color-fg);
+    color: #000;
+    font-weight: 700;
+    font-size: clamp(1rem, 2vw, 1.2rem);
+    transition:
+      background 0.3s var(--ease-brand),
+      transform 0.3s var(--ease-brand),
+      box-shadow 0.3s var(--ease-brand);
+    will-change: transform;
+  }
+  .cta-btn:hover {
+    background: var(--color-accent-bright);
+    transform: translateY(-2px);
+    box-shadow: 0 8px 30px rgba(34, 171, 207, 0.3);
+  }
+  .cta-dot {
+    width: 10px;
+    height: 10px;
+    border-radius: 50%;
+    background: var(--color-accent);
+    transition: background 0.3s;
+  }
+  .cta-btn:hover .cta-dot {
+    background: #000;
   }
 </style>

@@ -2,7 +2,6 @@ import type { SiteConfig } from "./types";
 
 /**
  * Configuración global del sitio — ÚNICA fuente de verdad de marca y contacto.
- * TODO: reemplazar los datos placeholder por los reales de Codesotec.
  */
 export const SITE: SiteConfig = {
   brand: {
@@ -10,10 +9,12 @@ export const SITE: SiteConfig = {
     suffix: "",
   },
 
-  email: "hello@codesotec.com", // TODO: dato real
-  phone: "+1 000 000 0000", // TODO: dato real
-  phoneHref: "tel:+10000000000", // TODO: dato real
-  address: "Remote-first · LATAM", // TODO: dato real
+  email: "ventas@codesotec.com",
+  phone: "+(51) 997441958",
+  phoneHref: "tel:+51997441958",
+  address: "Calle Ficaria 3856 - Urbanización Las Palmeras, Los Olivos",
+  phones: ["+(51) 997441958", "+(51) 979 890 845", "(01)7702212"],
+  schedule: "Lunes - Sábados · 9.00 hrs - 19.00 hrs",
 
   languages: [
     { code: "EN", active: false },
@@ -30,30 +31,18 @@ export const SITE: SiteConfig = {
   ],
 
   social: [
-    { label: "LinkedIn", href: "#", external: true },
-    { label: "GitHub", href: "#", external: true },
-    { label: "Instagram", href: "#", external: true },
-    { label: "X / Twitter", href: "#", external: true },
-    { label: "Dribbble", href: "#", external: true },
+    { label: "LinkedIn", href: "https://linkedin.com/company/codesotec", external: true },
+    { label: "GitHub", href: "https://github.com/codesotec", external: true },
+    { label: "Instagram", href: "https://instagram.com/codesotec", external: true },
+    { label: "X / Twitter", href: "https://x.com/codesotec", external: true },
+    { label: "Dribbble", href: "https://dribbble.com/codesotec", external: true },
   ],
 
   legal: [
-    { label: "Terms of Use", href: "#" },
-    { label: "Privacy Policy", href: "#" },
-    { label: "Cookie Policy", href: "#" },
+    { label: "Terms of Use", href: "/terms" },
+    { label: "Privacy Policy", href: "/privacy" },
+    { label: "Cookie Policy", href: "/cookies" },
   ],
-
-  reviews: {
-    count: 14,
-    platform: "Clutch",
-  },
 
   copyright: "© 2018 – 2026 All rights reserved. Codesotec Ltd.",
 };
-
-/** Enlaces del pie: primeras 3 opciones de nav + Blog + las restantes. */
-export const FOOTER_MENU: SiteConfig["nav"] = [
-  ...SITE.nav.slice(0, 3),
-  { label: "Blog", href: "#" },
-  ...SITE.nav.slice(3),
-];

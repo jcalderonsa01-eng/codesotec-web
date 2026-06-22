@@ -1,73 +1,140 @@
 ---
-import Button from "@/components/ui/Button.astro";
+const principles = [
+  {
+    idx: "01",
+    title: "Señal sobre ruido",
+    body: "Menos, pero más claro. Priorizamos lo que de verdad mueve la aguja.",
+    icon: "target",
+  },
+  {
+    idx: "02",
+    title: "Claridad estratégica",
+    body: "Cada decisión técnica responde a un objetivo de negocio concreto.",
+    icon: "compass",
+  },
+  {
+    idx: "03",
+    title: "Coraje creativo",
+    body: "Apostamos por ideas valientes, no por lo seguro y olvidable.",
+    icon: "zap",
+  },
+  // {
+  //   idx: "04",
+  //   title: "Impacto medible",
+  //   body: "Diseño y código que se traducen en métricas reales.",
+  //   icon: "bar-chart",
+  // },
+];
+
+const icons: Record<string, string> = {
+  target:
+    "M12 22c5.523 0 10-4.477 10-10S17.523 2 12 2 2 6.477 2 12s4.477 10 10 10Zm0-14v4m0 0v4m0-4h4m-4 0H8",
+  compass:
+    "M12 22c5.523 0 10-4.477 10-10S17.523 2 12 2 2 6.477 2 12s4.477 10 10 10Zm3.5-14-5 2-2 5 5-2 2-5Z",
+  zap: "M13 2 4.09 12.11a.5.5 0 0 0 .38.82H11v7l8.91-10.11a.5.5 0 0 0-.38-.82H13V2Z",
+  "bar-chart": "M18 20V10M12 20V4M6 20v-6",
+};
 ---
 
-<section class="section signal" id="services">
-  <div class="wrap">
-    <div class="idx" data-reveal style="margin-bottom:22px">(02) — What we believe</div>
-    <h2 class="big" data-signal>
-      <span class="reveal-line"><span>In a world of</span></span>
-      <span class="reveal-line"><span>digital noise, we</span></span>
-      <span class="reveal-line"><span>create <em>signal.</em></span></span>
-    </h2>
-    <p data-reveal data-d="2">We cut through the chaos with strategic clarity and creative courage — turning passive viewers into active participants in your brand's journey.</p>
-    <div class="cta-row" data-reveal data-d="3">
-      <Button magnetic>Start a project</Button>
-      <Button variant="ghost" href="#contact" magnetic>Learn more</Button>
+<section class="signal-principles relative isolate overflow-hidden" id="services" data-signal>
+  <div
+    class="pointer-events-none absolute inset-x-0 top-0 h-px bg-[linear-gradient(90deg,transparent,rgba(255,255,255,0.14),transparent)]"
+  >
+  </div>
+
+  <div class="wrap relative">
+    <div class="grid grid-cols-1 gap-12 lg:grid-cols-12 lg:gap-16">
+      <div class="signal-head relative self-start lg:sticky lg:top-24 lg:col-span-5">
+        <div
+          class="head-glow pointer-events-none absolute -top-28 -left-20 -z-10 h-[420px] w-[420px] rounded-full opacity-50 blur-[95px]"
+          style="background:radial-gradient(circle at 32% 30%,rgba(34,171,207,0.55),transparent 62%),radial-gradient(circle at 72% 70%,rgba(160,119,240,0.45),transparent 62%)"
+        >
+        </div>
+        <h2 class="signal-headline flex flex-col gap-0 font-semibold tracking-[-0.04em]">
+          <span class="block overflow-hidden">
+            <span
+              class="signal-line inline-block text-[clamp(7rem,14vw,14rem)] leading-[1] font-black"
+              style="background:linear-gradient(135deg,#22ABCF 0%,#A077F0 100%);-webkit-background-clip:text;background-clip:text;-webkit-text-fill-color:transparent;color:transparent"
+              >+5</span
+            >
+          </span>
+          <span class="block overflow-hidden">
+            <span class="signal-line inline-block text-[clamp(1.6rem,3vw,2.6rem)]"
+              >Satisfaciendo</span
+            >
+          </span>
+          <span class="block overflow-hidden">
+            <span class="signal-line inline-block text-[clamp(1.6rem,3vw,2.6rem)]"
+              >las <em
+                class="font-serif text-[clamp(1.6rem,3vw,2.6rem)] italic"
+                style="background:linear-gradient(135deg,#22ABCF 0%,#FFFFFF 50%,#A077F0 100%);-webkit-background-clip:text;background-clip:text;-webkit-text-fill-color:transparent;color:transparent"
+                >necesidades</em
+              ></span
+            >
+          </span>
+          <span class="block overflow-hidden">
+            <span class="signal-line inline-block text-[clamp(1.6rem,3vw,2.6rem)]"
+              >de nuestros clientes</span
+            >
+          </span>
+        </h2>
+      </div>
+
+      <!--Card container-->
+      <div class="signal-cards flex flex-col gap-4 md:gap-5 lg:col-span-7">
+        {
+          principles.map((p) => (
+            <article class="principle-card group/card relative overflow-hidden rounded-2xl border border-white/[0.1] bg-[#0d0f0e]">
+              <div
+                class="card-glow pointer-events-none absolute inset-0 opacity-0"
+                style="background:radial-gradient(120% 130% at 0% 0%,rgba(34,171,207,0.12),transparent 55%),radial-gradient(120% 130% at 100% 100%,rgba(160,119,240,0.12),transparent 55%)"
+              />
+              <span class="pointer-events-none absolute top-5 right-7 text-[3.4rem] leading-none font-semibold tracking-[-0.05em] text-white/[0.055] select-none">
+                {p.idx}
+              </span>
+              <div class="relative z-10 flex flex-col gap-4">
+                <div class="card-icon text-accent inline-flex h-12 w-12 items-center justify-center rounded-xl border border-white/[0.12]">
+                  <svg
+                    class="h-6 w-6"
+                    viewBox="0 0 24 24"
+                    fill="none"
+                    stroke="currentColor"
+                    stroke-width="1.5"
+                    stroke-linecap="round"
+                    stroke-linejoin="round"
+                  >
+                    <path d={icons[p.icon]} />
+                  </svg>
+                </div>
+                <h3 class="text-xl font-semibold tracking-[-0.02em] md:text-[1.4rem]">{p.title}</h3>
+                <div class="card-underline brand-underline h-[2px] w-16 origin-left rounded-full" />
+                <p class="text-faint max-w-[48ch] text-sm leading-relaxed md:text-[0.97rem]">
+                  {p.body}
+                </p>
+              </div>
+            </article>
+          ))
+        }
+      </div>
     </div>
   </div>
 </section>
 
 <style>
-  .signal {
-    text-align: center;
-    position: relative;
-    overflow: hidden;
+  .signal-principles {
     padding-block: clamp(72px, 11vw, 150px);
   }
-  .big {
-    font-weight: 900;
-    letter-spacing: -0.04em;
-    line-height: 1.02;
-    font-size: clamp(2.4rem, 7vw, 6rem);
-    max-width: 16ch;
-    margin: 0 auto;
+  .signal-headline .signal-line {
+    line-height: 1.2;
   }
-  .big em {
-    font-style: italic;
-    font-weight: 200;
-    color: var(--color-accent-bright);
-  }
-  .signal p {
-    max-width: 54ch;
-    margin: 30px auto 0;
-    color: var(--color-muted);
-    font-size: clamp(1rem, 1.5vw, 1.18rem);
-    line-height: 1.6;
-  }
-  .cta-row {
+  .principle-card {
     display: flex;
-    gap: 14px;
+    flex-direction: column;
     justify-content: center;
-    margin-top: 40px;
-    flex-wrap: wrap;
+    padding: clamp(1.5rem, 3vw, 2.5rem);
+    min-height: 200px;
   }
-  .reveal-line {
-    display: block;
-    overflow: hidden;
-  }
-  .reveal-line > span {
-    display: block;
-    transform: translateY(105%);
-    transition: transform 0.9s var(--ease-brand);
-  }
-  .in .reveal-line > span {
-    transform: translateY(0);
-  }
-  .idx {
-    font-family: var(--font-mono);
-    font-size: 0.74rem;
-    letter-spacing: 0.18em;
-    color: var(--color-accent-bright);
+  .brand-underline {
+    background: var(--bg-gradient);
   }
 </style>

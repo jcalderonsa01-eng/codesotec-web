@@ -98,42 +98,6 @@ test.describe('Animation system', () => {
     await expect(signal).toHaveClass(/in/)
   })
 
-  test('counters animate from 0× to their target value', async ({ page }) => {
-    await page.waitForFunction(() => {
-      const preloader = document.querySelector('[data-preloader]')
-      return !preloader || preloader.classList.contains('done')
-    }, { timeout: 10000 })
-
-    const counters = page.locator('[data-count]')
-    const count = await counters.count()
-    expect(count).toBeGreaterThan(0)
-
-    const initialValues = await page.evaluate(() => {
-      return Array.from(document.querySelectorAll('[data-count]')).map(el => el.textContent)
-    })
-    initialValues.forEach(val => {
-      expect(val).toMatch(/^0/)
-    })
-
-    const targetValues = await page.evaluate(() => {
-      return Array.from(document.querySelectorAll('[data-count]')).map(el => el.getAttribute('data-count'))
-    })
-    const targets = targetValues.map(v => parseInt(v ?? '0', 10))
-
-    await page.evaluate(() => window.scrollTo(0, document.body.scrollHeight))
-    await page.waitForTimeout(2000)
-
-    const finalValues = await page.evaluate(() => {
-      return Array.from(document.querySelectorAll('[data-count]')).map(el => el.textContent)
-    })
-    finalValues.forEach((val, i) => {
-      if (val !== null) {
-        const num = parseInt(val.replace(/[^0-9]/g, ''), 10)
-        expect(num).toBe(targets[i])
-      }
-    })
-  })
-
   test('custom cursor elements exist in DOM', async ({ page }) => {
     const dot = page.locator('[data-cursor-dot]')
     const ring = page.locator('[data-cursor-ring]')

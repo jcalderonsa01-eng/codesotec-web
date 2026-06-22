@@ -11,8 +11,6 @@ export const DATA = {
   reveal: "data-reveal",
   delay: "data-d",
   magnetic: "data-magnetic",
-  count: "data-count",
-  suffix: "data-suf",
 } as const;
 
 /** Selectores que las animaciones consultan. */
@@ -29,7 +27,6 @@ export const SELECTORS = {
   cursorRing: "[data-cursor-ring]",
   reveal: `[${DATA.reveal}]`,
   magnetic: `[${DATA.magnetic}]`,
-  count: `[${DATA.count}]`,
   /** Elementos que agrandan el anillo del cursor al pasar por encima. */
   cursorHover: "a, button, [data-cursor-hover]",
 } as const;
@@ -41,7 +38,6 @@ export const CSS_CLASS = {
   revealIn: "in",
   signalIn: "in",
   navScrolled: "scrolled",
-  navHidden: "hide",
   navUnified: "unified",
   menuOpen: "open",
   burgerActive: "x",

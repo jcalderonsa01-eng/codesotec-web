@@ -27,8 +27,7 @@ import { SITE } from "@/data/site.config";
     </div>
   </div>
 
-  <!-- Tema: derecha en modo separado, integrado en modo unificado -->
-  <button class="nav-theme" id="themeToggle" aria-label="Cambiar tema">🌙</button>
+
 </header>
 
 <style>
@@ -51,17 +50,12 @@ import { SITE } from "@/data/site.config";
     padding: 0;
 
     transition:
-      transform 0.5s var(--ease-brand),
       background 0.45s ease,
       border-color 0.45s ease,
       box-shadow 0.45s ease,
       padding 0.45s ease,
       width 0.45s ease,
       border-radius 0.45s ease;
-  }
-
-  .nav.hide {
-    transform: translate(-50%, -120%);
   }
 
   /* ── Logo ─────────────────────────────────────────────────────── */
@@ -135,33 +129,6 @@ import { SITE } from "@/data/site.config";
     transform: translateY(-1px);
   }
 
-  /* ── Botón de tema ────────────────────────────────────────────── */
-  .nav-theme {
-    flex: 0 0 auto;
-    width: 36px;
-    height: 36px;
-    border-radius: 50%;
-    border: 1px solid rgba(255, 255, 255, 0.14);
-    background: transparent;
-    color: var(--color-fg);
-    font-size: 1rem;
-    cursor: pointer;
-    display: grid;
-    place-items: center;
-    transition:
-      background 0.2s,
-      width 0.45s ease,
-      height 0.45s ease,
-      border-radius 0.45s ease,
-      border-color 0.45s ease,
-      margin 0.45s ease,
-      padding 0.45s ease;
-  }
-
-  .nav-theme:hover {
-    background: rgba(255, 255, 255, 0.10);
-  }
-
   /* ── Burger ───────────────────────────────────────────────────── */
   .burger {
     display: none;
@@ -223,19 +190,6 @@ import { SITE } from "@/data/site.config";
     padding: 0;
   }
 
-  /* Botón de tema se integra al final con separador izquierdo */
-  .nav.unified .nav-theme {
-    margin-left: 14px;
-    padding: 4px 8px;
-    border-top: none;
-    border-right: none;
-    border-bottom: none;
-    border-left: 1px solid rgba(255, 255, 255, 0.12);
-    border-radius: 0;
-    width: auto;
-    height: auto;
-  }
-
   /* ── Responsive ───────────────────────────────────────────────── */
   @media (max-width: 1024px) {
     .nl {
@@ -259,9 +213,6 @@ import { SITE } from "@/data/site.config";
       padding: 6px 8px;
     }
 
-    /* Unificado mobile: logo + burger, sin tema */
-    .nav.unified .nav-theme {
-      display: none;
-    }
+
   }
 </style>
