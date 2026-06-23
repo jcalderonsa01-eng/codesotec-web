@@ -126,15 +126,18 @@ const visibleChar = (char: string) => (char === " " ? "\u00A0" : char);
     gap: 2px;
   }
 
-  .nl,
   .nl-row--top {
     color: #fff;
   }
   .nl-row--bottom {
-    color: #22abcf;
+    color: transparent;
+  }
+  .nl-row--bottom .nl-char {
     background-image: linear-gradient(135deg, #22abcf 0%, #a077f0 100%);
     background-clip: text;
     -webkit-background-clip: text;
+    color: transparent;
+    -webkit-text-fill-color: transparent;
   }
 
   .nl {
@@ -179,7 +182,6 @@ const visibleChar = (char: string) => (char === " " ? "\u00A0" : char);
     position: absolute;
     top: 0;
     left: 0;
-    color: var(--color-fg);
   }
 
   .nl-char {
