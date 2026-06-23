@@ -2,6 +2,9 @@
 import { SITE } from "@/data/site.config";
 
 /** Barra de navegación fija en forma de cápsula centrada. */
+
+const splitLabel = (label: string) => Array.from(label);
+const visibleChar = (char: string) => (char === " " ? "\u00A0" : char);
 ---
 
 <header class="nav" data-nav>
@@ -15,8 +18,23 @@ import { SITE } from "@/data/site.config";
     <nav class="links">
       {
         SITE.nav.map((link) => (
-          <a class="nl" href={link.href}>
-            {link.label}
+          <a class="nl" href={link.href} aria-label={link.label}>
+            <span class="nl-mask" aria-hidden="true">
+              <span class="nl-row nl-row--top">
+                {splitLabel(link.label).map((char, index) => (
+                  <span class="nl-char" style={`--i: ${index}`}>
+                    {visibleChar(char)}
+                  </span>
+                ))}
+              </span>
+              <span class="nl-row nl-row--bottom">
+                {splitLabel(link.label).map((char, index) => (
+                  <span class="nl-char" style={`--i: ${index}`}>
+                    {visibleChar(char)}
+                  </span>
+                ))}
+              </span>
+            </span>
           </a>
         ))
       }
@@ -26,8 +44,6 @@ import { SITE } from "@/data/site.config";
       <span></span><span></span><span></span>
     </div>
   </div>
-
-
 </header>
 
 <style>
@@ -87,7 +103,7 @@ import { SITE } from "@/data/site.config";
     padding: 8px 10px;
 
     background: rgba(8, 8, 16, 0.72);
-    border: 1px solid rgba(255, 255, 255, 0.10);
+    border: 1px solid rgba(255, 255, 255, 0.1);
     border-radius: 12px;
     backdrop-filter: blur(22px);
     -webkit-backdrop-filter: blur(22px);
@@ -110,23 +126,88 @@ import { SITE } from "@/data/site.config";
     gap: 2px;
   }
 
+  .nl,
+  .nl-row--top {
+    color: #fff;
+  }
+  .nl-row--bottom {
+    color: #22abcf;
+    background-image: linear-gradient(135deg, #22abcf 0%, #a077f0 100%);
+    background-clip: text;
+    -webkit-background-clip: text;
+  }
+
   .nl {
+    position: relative;
+    display: inline-flex;
+    align-items: center;
     font-size: 0.82rem;
     font-weight: 500;
-    color: var(--color-muted);
+    color: #22abcf;
     padding: 7px 11px;
     border-radius: 9999px;
     white-space: nowrap;
     transition:
       background 0.2s,
-      color 0.2s,
-      transform 0.2s;
+      color 0.2s;
   }
 
-  .nl:hover {
-    background: rgba(255, 255, 255, 0.10);
+  .nl:hover,
+  .nl:focus-visible {
     color: var(--color-fg);
-    transform: translateY(-1px);
+  }
+
+  .nl:focus-visible {
+    outline: 1px solid rgba(255, 255, 255, 0.34);
+    outline-offset: 3px;
+  }
+
+  .nl-mask {
+    position: relative;
+    display: inline-block;
+    height: 1.08em;
+    line-height: 1.08;
+    overflow: hidden;
+  }
+
+  .nl-row {
+    display: inline-flex;
+    white-space: nowrap;
+  }
+
+  .nl-row--bottom {
+    position: absolute;
+    top: 0;
+    left: 0;
+    color: var(--color-fg);
+  }
+
+  .nl-char {
+    display: inline-block;
+    transform: translateY(0);
+    opacity: 1;
+    transition:
+      transform 0.3s cubic-bezier(0.22, 1, 0.36, 1),
+      opacity 0.22s ease;
+    transition-delay: calc(var(--i) * 18ms);
+    will-change: transform, opacity;
+  }
+
+  .nl-row--bottom .nl-char {
+    transform: translateY(115%);
+    opacity: 0;
+  }
+
+  .nl:hover .nl-row--top .nl-char,
+  .nl:focus-visible .nl-row--top .nl-char {
+    transform: translateY(-115%);
+    opacity: 0;
+  }
+
+  .nl:hover .nl-row--bottom .nl-char,
+  .nl:focus-visible .nl-row--bottom .nl-char {
+    transform: translateY(0);
+    opacity: 1;
   }
 
   /* ── Burger ───────────────────────────────────────────────────── */
@@ -150,14 +231,20 @@ import { SITE } from "@/data/site.config";
     transition: 0.3s var(--ease-brand);
   }
 
-  .burger.x span:nth-child(1) { transform: translateY(6px) rotate(45deg); }
-  .burger.x span:nth-child(2) { opacity: 0; }
-  .burger.x span:nth-child(3) { transform: translateY(-6px) rotate(-45deg); }
+  .burger.x span:nth-child(1) {
+    transform: translateY(6px) rotate(45deg);
+  }
+  .burger.x span:nth-child(2) {
+    opacity: 0;
+  }
+  .burger.x span:nth-child(3) {
+    transform: translateY(-6px) rotate(-45deg);
+  }
 
   /* ── Modo UNIFICADO (.unified) ────────────────────────────────── */
   .nav.unified {
     background: rgba(8, 8, 16, 0.72);
-    border-color: rgba(255, 255, 255, 0.10);
+    border-color: rgba(255, 255, 255, 0.1);
     backdrop-filter: blur(22px);
     -webkit-backdrop-filter: blur(22px);
     box-shadow: 0 8px 40px rgba(0, 0, 0, 0.28);
@@ -212,7 +299,21 @@ import { SITE } from "@/data/site.config";
     .nav-capsule {
       padding: 6px 8px;
     }
+  }
 
+  @media (prefers-reduced-motion: reduce) {
+    .nl-char {
+      transition: none;
+    }
 
+    .nl-row--bottom {
+      display: none;
+    }
+
+    .nl:hover .nl-row--top .nl-char,
+    .nl:focus-visible .nl-row--top .nl-char {
+      transform: none;
+      opacity: 1;
+    }
   }
 </style>

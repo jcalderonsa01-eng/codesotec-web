@@ -39,7 +39,7 @@ body {
 }
 
 /* Cada hijo directo de body se posiciona con z-index 1 para quedar
-   por encima del overlay (z 0) y debajo del cursor (z 9999). */
+   por encima del overlay (z 0). */
 body > * {
   position: relative;
   z-index: 1;
@@ -112,35 +112,6 @@ video {
 }
 [data-reveal][data-d="4"] {
   transition-delay: 0.32s;
-}
-
-/* ---- custom cursor (contrato con lib/animations/cursor.ts) ---- */
-html.has-custom-cursor,
-html.has-custom-cursor * {
-  cursor: none !important;
-}
-[data-cursor-dot] {
-  position: fixed;
-  top: 0;
-  left: 0;
-  width: 12px;
-  height: 12px;
-  border-radius: 50%;
-  background: #fff;
-  pointer-events: none;
-  z-index: 9999;
-}
-[data-cursor-ring] {
-  position: fixed;
-  top: 0;
-  left: 0;
-  width: 40px;
-  height: 40px;
-  border-radius: 50%;
-  border: 2px solid rgba(255, 255, 255, 0.4);
-  pointer-events: none;
-  z-index: 9999;
-  transition: transform 0.15s ease;
 }
 
 /* ---- accesibilidad: reduced motion ---- */

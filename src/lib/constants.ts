@@ -23,12 +23,8 @@ export const SELECTORS = {
   nav: "[data-nav]",
   burger: "[data-burger]",
   mobileMenu: "[data-mobile-menu]",
-  cursorDot: "[data-cursor-dot]",
-  cursorRing: "[data-cursor-ring]",
   reveal: `[${DATA.reveal}]`,
   magnetic: `[${DATA.magnetic}]`,
-  /** Elementos que agrandan el anillo del cursor al pasar por encima. */
-  cursorHover: "a, button, [data-cursor-hover]",
 } as const;
 
 /** Clases que el JS conmuta (estilizadas en el CSS de cada componente). */
@@ -41,7 +37,6 @@ export const CSS_CLASS = {
   navUnified: "unified",
   menuOpen: "open",
   burgerActive: "x",
-  cursorHover: "hover",
   noScroll: "no-scroll",
 } as const;
 

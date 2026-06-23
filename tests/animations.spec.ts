@@ -98,21 +98,6 @@ test.describe('Animation system', () => {
     await expect(signal).toHaveClass(/in/)
   })
 
-  test('custom cursor elements exist in DOM', async ({ page }) => {
-    const dot = page.locator('[data-cursor-dot]')
-    const ring = page.locator('[data-cursor-ring]')
-    await expect(dot).toBeVisible({ timeout: 5000 })
-    await expect(ring).toBeVisible({ timeout: 5000 })
-  })
-
-  test('custom cursor is active (html has class)', async ({ page }) => {
-    await page.waitForTimeout(1000)
-    const hasCursorClass = await page.evaluate(() => {
-      return document.documentElement.classList.contains('has-custom-cursor')
-    })
-    expect(hasCursorClass).toBe(true)
-  })
-
   test('magnetic elements exist on the page', async ({ page }) => {
     const magneticEls = page.locator('[data-magnetic]')
     const count = await magneticEls.count()
