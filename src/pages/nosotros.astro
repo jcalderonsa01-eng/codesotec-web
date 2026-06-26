@@ -1,0 +1,27 @@
+---
+import BaseLayout from "@/layouts/BaseLayout.astro";
+import NosotrosBanner from "@/components/sections/NosotrosBanner.astro";
+import NosotrosSectionBlock from "@/components/sections/NosotrosSectionBlock.astro";
+import { NOSOTROS } from "@/data/nosotros";
+---
+
+<BaseLayout
+  title="Nosotros"
+  description="Conoce a Codesotec: más de 5 años impulsando la transformación digital de empresas líderes en Latinoamérica."
+>
+  <NosotrosBanner
+    heading={NOSOTROS.banner.heading}
+    sub={NOSOTROS.banner.sub}
+    image={NOSOTROS.banner.image}
+  />
+  {
+    NOSOTROS.sections.map((s, i) => (
+      <NosotrosSectionBlock
+        title={s.title}
+        body={s.body}
+        image={s.image}
+        imageRight={i % 2 !== 0}
+      />
+    ))
+  }
+</BaseLayout>

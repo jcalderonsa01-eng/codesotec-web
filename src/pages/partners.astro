@@ -1,0 +1,12 @@
+---
+import BaseLayout from "@/layouts/BaseLayout.astro";
+import PartnersStack from "@/components/sections/PartnersStack.astro";
+import { PARTNERS } from "@/data/partners";
+---
+
+<BaseLayout
+  title="Partners"
+  description="Trabajamos con los mejores proveedores tecnologicos del mercado para ofrecer soluciones integrales de alta calidad."
+>
+  <PartnersStack partners={PARTNERS} />
+</BaseLayout>

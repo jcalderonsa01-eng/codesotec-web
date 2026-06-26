@@ -22,12 +22,11 @@ export const SITE: SiteConfig = {
   ],
 
   nav: [
-    { label: "Inicio", href: "#top" },
-    { label: "Nosotros", href: "#nosotros" },
-    { label: "Ofertas del Mes", href: "#ofertas" },
-    { label: "Servicios", href: "#servicios" },
-    { label: "Leasing/Alquiler", href: "#leasing" },
-    { label: "Contacto", href: "#contacto" },
+    { label: "Inicio", href: "/" },
+    { label: "Nosotros", href: "/nosotros" },
+    { label: "Productos", href: "/productos" },
+    { label: "Partners", href: "/partners" },
+    { label: "Contacto", href: "/contacto" },
   ],
 
   social: [

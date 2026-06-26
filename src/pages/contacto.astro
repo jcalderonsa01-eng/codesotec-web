@@ -1,0 +1,56 @@
+---
+import BaseLayout from "@/layouts/BaseLayout.astro";
+import { SITE } from "@/data/site.config";
+---
+
+<BaseLayout title="Contacto" description="Ponte en contacto con Codesotec. Estamos listos para ayudarte.">
+  <section class="page-section">
+    <div class="page-content">
+      <h1>Contacto</h1>
+      <p>Estamos listos para impulsar tu negocio. Contáctanos por cualquiera de estos medios:</p>
+      <ul class="contact-list">
+        <li><strong>Email:</strong> <a href={`mailto:${SITE.email}`}>{SITE.email}</a></li>
+        <li><strong>Teléfono:</strong> <a href={SITE.phoneHref}>{SITE.phone}</a></li>
+        <li><strong>Dirección:</strong> {SITE.address}</li>
+        <li><strong>Horario:</strong> {SITE.schedule}</li>
+      </ul>
+    </div>
+  </section>
+</BaseLayout>
+
+<style>
+  .page-section {
+    padding: 160px 24px 80px;
+    max-width: 800px;
+    margin: 0 auto;
+    min-height: 60vh;
+  }
+  .page-content h1 {
+    font-size: clamp(2rem, 5vw, 3.2rem);
+    font-weight: 700;
+    margin-bottom: 24px;
+    letter-spacing: -0.03em;
+  }
+  .page-content p {
+    font-size: 1.1rem;
+    line-height: 1.8;
+    color: var(--color-muted);
+    margin-bottom: 32px;
+  }
+  .contact-list {
+    list-style: none;
+    padding: 0;
+    display: flex;
+    flex-direction: column;
+    gap: 16px;
+    font-size: 1.05rem;
+    line-height: 1.7;
+    color: var(--color-muted);
+  }
+  .contact-list a {
+    color: var(--color-accent-bright, #22abcf);
+  }
+  .contact-list a:hover {
+    text-decoration: underline;
+  }
+</style>

@@ -1,0 +1,92 @@
+---
+interface Props {
+  title: string;
+  body: string;
+  image: { src: string; alt: string };
+  imageRight?: boolean;
+}
+const { title, body, image, imageRight = false } = Astro.props;
+---
+
+<section class="nosotros-block">
+  <div class="wrap">
+    <div class={`block-grid ${imageRight ? "image-right" : ""}`}>
+      <div class="block-img" data-reveal data-d="1">
+        <img
+          src={image.src}
+          alt={image.alt}
+          loading="lazy"
+          decoding="async"
+          class="h-full w-full object-cover"
+        />
+      </div>
+      <div class="block-text" data-reveal>
+        <h2 class="block-title">{title}</h2>
+        <div class="block-underline" aria-hidden="true"></div>
+        <p class="block-body">{body}</p>
+      </div>
+    </div>
+  </div>
+</section>
+
+<style>
+  .nosotros-block {
+    padding-block: clamp(80px, 12vw, 140px);
+    background: #050505;
+    border-top: 1px solid transparent;
+  }
+
+  .block-grid {
+    display: grid;
+    grid-template-columns: 1fr;
+    gap: clamp(2rem, 5vw, 4rem);
+    align-items: center;
+  }
+
+  @media (min-width: 1024px) {
+    .block-grid {
+      grid-template-columns: 1fr 1fr;
+    }
+    .image-right .block-img {
+      order: 2;
+    }
+    .image-right .block-text {
+      order: 1;
+    }
+  }
+
+  .block-img {
+    border-radius: 1rem;
+    overflow: hidden;
+    aspect-ratio: 4/3;
+    border: 1px solid rgba(255, 255, 255, 0.1);
+  }
+
+  .block-text {
+    display: flex;
+    flex-direction: column;
+    gap: 1.25rem;
+  }
+
+  .block-title {
+    font-size: clamp(1.75rem, 3.5vw, 3rem);
+    font-weight: 700;
+    letter-spacing: -0.03em;
+    line-height: 1.15;
+    color: #ffffff;
+  }
+
+  .block-underline {
+    height: 2px;
+    width: 3rem;
+    border-radius: 9999px;
+    background: var(--bg-gradient);
+  }
+
+  .block-body {
+    font-size: clamp(0.95rem, 1.5vw, 1.1rem);
+    color: var(--color-muted);
+    line-height: 1.75;
+    max-width: 54ch;
+  }
+</style>

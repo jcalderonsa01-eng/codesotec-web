@@ -25,6 +25,7 @@ export const SELECTORS = {
   mobileMenu: "[data-mobile-menu]",
   reveal: `[${DATA.reveal}]`,
   magnetic: `[${DATA.magnetic}]`,
+  stackCard: "[data-stack-card]",
 } as const;
 
 /** Clases que el JS conmuta (estilizadas en el CSS de cada componente). */

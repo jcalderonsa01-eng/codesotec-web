@@ -7,6 +7,7 @@ import { createReveal } from "./reveal";
 import { createSignalPrinciples } from "./signalPrinciples";
 import { createHeroParallax } from "./heroParallax";
 import { createMagnetic } from "./magnetic";
+import { createPartnersStack } from "./partnersStack";
 
 /**
  * Único punto de extensión de la capa de animación.
@@ -22,4 +23,5 @@ export const animationRegistry: readonly AnimationFactory[] = [
   createSignalPrinciples,
   createHeroParallax,
   createMagnetic,
+  createPartnersStack,
 ];

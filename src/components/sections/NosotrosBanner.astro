@@ -1,0 +1,65 @@
+---
+interface Props {
+  heading: string;
+  sub: string;
+  image: { src: string; alt: string };
+}
+const { sub, image } = Astro.props;
+---
+
+<section
+  class="nosotros-banner relative flex min-h-[65svh] items-center justify-center overflow-hidden"
+>
+  <img
+    src={image.src}
+    alt={image.alt}
+    class="absolute inset-0 h-full w-full object-cover"
+    loading="eager"
+    decoding="async"
+  />
+  <!-- overlay oscuro más fuerte -->
+  <div class="absolute inset-0" style="background:rgba(2,4,12,0.85)"></div>
+  <!-- fade hacia el color de la primera sección -->
+  <div class="banner-fade absolute right-0 bottom-0 left-0"></div>
+
+  <div class="wrap relative z-10 py-24 text-center">
+    <h1
+      class="banner-heading leading-[.9] font-black tracking-tight uppercase"
+      style="font-size:clamp(3rem,9vw,8rem)"
+      data-reveal
+    >
+      <span class="heading-plain">+5 años</span><br />
+      <em class="heading-italic">contigo</em>
+    </h1>
+  </div>
+</section>
+
+<style>
+  .banner-fade {
+    height: 180px;
+    background: linear-gradient(to bottom, transparent, #050505);
+    z-index: 1;
+  }
+
+  .wrap {
+    z-index: 2;
+  }
+
+  .heading-plain {
+    color: #ffffff;
+    -webkit-text-fill-color: #ffffff;
+  }
+
+  .heading-italic {
+    font-style: italic;
+    font-family: var(--font-serif, Georgia, "Times New Roman", serif);
+    font-weight: 400;
+    background: var(--bg-gradient);
+    -webkit-background-clip: text;
+    background-clip: text;
+    -webkit-text-fill-color: transparent;
+    color: transparent;
+    text-transform: none;
+    letter-spacing: 0;
+  }
+</style>
