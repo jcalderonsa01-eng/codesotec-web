@@ -8,6 +8,7 @@ import { createSignalPrinciples } from "./signalPrinciples";
 import { createHeroParallax } from "./heroParallax";
 import { createMagnetic } from "./magnetic";
 import { createPartnersStack } from "./partnersStack";
+import { createNosotrosScrollytelling } from "./nosotrosScrollytelling";
 
 /**
  * Único punto de extensión de la capa de animación.
@@ -24,4 +25,5 @@ export const animationRegistry: readonly AnimationFactory[] = [
   createHeroParallax,
   createMagnetic,
   createPartnersStack,
+  createNosotrosScrollytelling,
 ];

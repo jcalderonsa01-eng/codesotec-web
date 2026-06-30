@@ -1,0 +1,454 @@
+- generic [active] [ref=e1]:
+  - link "Saltar al contenido principal" [ref=e2] [cursor=pointer]:
+    - /url: "#main-content"
+  - generic [ref=e4]:
+    - generic [ref=e5]: Codesotec
+    - generic [ref=e8]: 0%
+  - banner [ref=e9]:
+    - link "Codesotec home" [ref=e10] [cursor=pointer]:
+      - /url: "#top"
+      - img "Codesotec" [ref=e11]
+    - navigation [ref=e13]:
+      - link "Inicio" [ref=e14] [cursor=pointer]:
+        - /url: /
+        - generic [ref=e15]:
+          - generic [ref=e16]:
+            - generic [ref=e17]: I
+            - generic [ref=e18]: "n"
+            - generic [ref=e19]: i
+            - generic [ref=e20]: c
+            - generic [ref=e21]: i
+            - generic [ref=e22]: o
+          - generic [ref=e23]:
+            - generic [ref=e24]: I
+            - generic [ref=e25]: "n"
+            - generic [ref=e26]: i
+            - generic [ref=e27]: c
+            - generic [ref=e28]: i
+            - generic [ref=e29]: o
+      - link "Nosotros" [ref=e30] [cursor=pointer]:
+        - /url: /nosotros
+        - generic [ref=e31]:
+          - generic [ref=e32]:
+            - generic [ref=e33]: "N"
+            - generic [ref=e34]: o
+            - generic [ref=e35]: s
+            - generic [ref=e36]: o
+            - generic [ref=e37]: t
+            - generic [ref=e38]: r
+            - generic [ref=e39]: o
+            - generic [ref=e40]: s
+          - generic [ref=e41]:
+            - generic [ref=e42]: "N"
+            - generic [ref=e43]: o
+            - generic [ref=e44]: s
+            - generic [ref=e45]: o
+            - generic [ref=e46]: t
+            - generic [ref=e47]: r
+            - generic [ref=e48]: o
+            - generic [ref=e49]: s
+      - link "Productos" [ref=e50] [cursor=pointer]:
+        - /url: /productos
+        - generic [ref=e51]:
+          - generic [ref=e52]:
+            - generic [ref=e53]: P
+            - generic [ref=e54]: r
+            - generic [ref=e55]: o
+            - generic [ref=e56]: d
+            - generic [ref=e57]: u
+            - generic [ref=e58]: c
+            - generic [ref=e59]: t
+            - generic [ref=e60]: o
+            - generic [ref=e61]: s
+          - generic [ref=e62]:
+            - generic [ref=e63]: P
+            - generic [ref=e64]: r
+            - generic [ref=e65]: o
+            - generic [ref=e66]: d
+            - generic [ref=e67]: u
+            - generic [ref=e68]: c
+            - generic [ref=e69]: t
+            - generic [ref=e70]: o
+            - generic [ref=e71]: s
+      - link "Partners" [ref=e72] [cursor=pointer]:
+        - /url: /partners
+        - generic [ref=e73]:
+          - generic [ref=e74]:
+            - generic [ref=e75]: P
+            - generic [ref=e76]: a
+            - generic [ref=e77]: r
+            - generic [ref=e78]: t
+            - generic [ref=e79]: "n"
+            - generic [ref=e80]: e
+            - generic [ref=e81]: r
+            - generic [ref=e82]: s
+          - generic [ref=e83]:
+            - generic [ref=e84]: P
+            - generic [ref=e85]: a
+            - generic [ref=e86]: r
+            - generic [ref=e87]: t
+            - generic [ref=e88]: "n"
+            - generic [ref=e89]: e
+            - generic [ref=e90]: r
+            - generic [ref=e91]: s
+  - generic [ref=e92]:
+    - link "Inicio" [ref=e93] [cursor=pointer]:
+      - /url: /
+      - text: Inicio
+      - generic [ref=e94]: ↗
+    - link "Nosotros" [ref=e95] [cursor=pointer]:
+      - /url: /nosotros
+      - text: Nosotros
+      - generic [ref=e96]: ↗
+    - link "Productos" [ref=e97] [cursor=pointer]:
+      - /url: /productos
+      - text: Productos
+      - generic [ref=e98]: ↗
+    - link "Partners" [ref=e99] [cursor=pointer]:
+      - /url: /partners
+      - text: Partners
+      - generic [ref=e100]: ↗
+    - generic [ref=e101]:
+      - link "ventas@codesotec.com" [ref=e102] [cursor=pointer]:
+        - /url: mailto:ventas@codesotec.com
+      - link "+(51) 997441958" [ref=e103] [cursor=pointer]:
+        - /url: tel:+51997441958
+  - main [ref=e104]:
+    - generic [ref=e105]:
+      - generic [ref=e107]:
+        - paragraph [ref=e108]: Nuestros Partners
+        - heading "Marcas que respaldan cada proyecto" [level=2] [ref=e109]:
+          - text: Marcas que
+          - emphasis [ref=e110]: respaldan
+          - text: cada proyecto
+      - generic [ref=e111]:
+        - article [ref=e112]:
+          - img
+          - generic [ref=e113]:
+            - generic [ref=e114]: "01"
+            - generic [ref=e115]:
+              - heading "Lenovo" [level=3] [ref=e116]
+              - paragraph [ref=e117]: Hardware · Servidores
+              - paragraph [ref=e118]: Soluciones de computo empresarial, servidores ThinkSystem y estaciones de trabajo de alto rendimiento.
+        - article [ref=e120]:
+          - img
+          - generic [ref=e121]:
+            - generic [ref=e122]: "02"
+            - generic [ref=e123]:
+              - heading "Dell" [level=3] [ref=e124]
+              - paragraph [ref=e125]: Hardware · Infraestructura
+              - paragraph [ref=e126]: "Infraestructura TI completa: servidores PowerEdge, almacenamiento y soluciones de virtualizacion."
+        - article [ref=e128]:
+          - img
+          - generic [ref=e129]:
+            - generic [ref=e130]: "03"
+            - generic [ref=e131]:
+              - heading "ASUS" [level=3] [ref=e132]
+              - paragraph [ref=e133]: Hardware · Networking
+              - paragraph [ref=e134]: Equipos de networking empresarial, routers, switches y dispositivos de computo profesional.
+        - article [ref=e136]:
+          - img
+          - generic [ref=e137]:
+            - generic [ref=e138]: "04"
+            - generic [ref=e139]:
+              - heading "Acer" [level=3] [ref=e140]
+              - paragraph [ref=e141]: Hardware · Computo
+              - paragraph [ref=e142]: Computadoras, laptops y monitores para entornos corporativos con soporte empresarial dedicado.
+        - article [ref=e144]:
+          - img
+          - generic [ref=e145]:
+            - generic [ref=e146]: "05"
+            - generic [ref=e147]:
+              - heading "HP" [level=3] [ref=e148]
+              - paragraph [ref=e149]: Hardware · Impresion
+              - paragraph [ref=e150]: Equipos de impresion, laptops EliteBook y soluciones de gestion documental para empresas.
+        - article [ref=e152]:
+          - generic [ref=e153]:
+            - generic [ref=e154]: "06"
+            - generic [ref=e155]:
+              - heading "Advance" [level=3] [ref=e156]
+              - paragraph [ref=e157]: Hardware · Perifericos
+              - paragraph [ref=e158]: Perifericos y accesorios tecnologicos para el mercado corporativo latinoamericano.
+        - article [ref=e160]:
+          - generic [ref=e161]:
+            - generic [ref=e162]: "07"
+            - generic [ref=e163]:
+              - heading "LG" [level=3] [ref=e164]
+              - paragraph [ref=e165]: Displays · Signage
+              - paragraph [ref=e166]: Monitores profesionales, pantallas de senalizacion digital y soluciones de visualizacion empresarial.
+        - article [ref=e168]:
+          - generic [ref=e169]:
+            - generic [ref=e170]: "08"
+            - generic [ref=e171]:
+              - heading "Samsung" [level=3] [ref=e172]
+              - paragraph [ref=e173]: Displays · Movil
+              - paragraph [ref=e174]: Dispositivos moviles corporativos, monitores profesionales y pantallas interactivas.
+        - article [ref=e176]:
+          - generic [ref=e177]:
+            - generic [ref=e178]: "09"
+            - generic [ref=e179]:
+              - heading "AOC" [level=3] [ref=e180]
+              - paragraph [ref=e181]: Displays · Monitores
+              - paragraph [ref=e182]: Monitores de alta resolucion para oficina y uso profesional con tecnologia de panel avanzada.
+        - article [ref=e184]:
+          - generic [ref=e185]:
+            - generic [ref=e186]: "010"
+            - generic [ref=e187]:
+              - heading "ViewSonic" [level=3] [ref=e188]
+              - paragraph [ref=e189]: Displays · Proyeccion
+              - paragraph [ref=e190]: Monitores, proyectores y pantallas interactivas para educacion y entornos corporativos.
+        - article [ref=e192]:
+          - generic [ref=e193]:
+            - generic [ref=e194]: "011"
+            - generic [ref=e195]:
+              - heading "Sony" [level=3] [ref=e196]
+              - paragraph [ref=e197]: AV · Proyeccion
+              - paragraph [ref=e198]: Equipos audiovisuales profesionales, proyectores de alta resolucion y soluciones de presentacion.
+        - article [ref=e200]:
+          - generic [ref=e201]:
+            - generic [ref=e202]: "012"
+            - generic [ref=e203]:
+              - heading "Logitech" [level=3] [ref=e204]
+              - paragraph [ref=e205]: Perifericos · Videoconferencia
+              - paragraph [ref=e206]: Dispositivos de videoconferencia, teclados, ratones y accesorios para espacios de trabajo modernos.
+        - article [ref=e208]:
+          - generic [ref=e209]:
+            - generic [ref=e210]: "013"
+            - generic [ref=e211]:
+              - heading "Jabra" [level=3] [ref=e212]
+              - paragraph [ref=e213]: Audio · Conferencia
+              - paragraph [ref=e214]: Soluciones de audio profesional, auriculares y dispositivos de conferencia para empresas.
+        - article [ref=e216]:
+          - generic [ref=e217]:
+            - generic [ref=e218]: "014"
+            - generic [ref=e219]:
+              - heading "Poly" [level=3] [ref=e220]
+              - paragraph [ref=e221]: Audio · Videoconferencia
+              - paragraph [ref=e222]: Equipos de videoconferencia, headsets y soluciones de comunicacion unificada empresarial.
+        - article [ref=e224]:
+          - generic [ref=e225]:
+            - generic [ref=e226]: "015"
+            - generic [ref=e227]:
+              - heading "JBL" [level=3] [ref=e228]
+              - paragraph [ref=e229]: Audio · Portatil
+              - paragraph [ref=e230]: Altavoces y accesorios de audio de alta calidad para entornos profesionales y presentaciones.
+        - article [ref=e232]:
+          - generic [ref=e233]:
+            - generic [ref=e234]: "016"
+            - generic [ref=e235]:
+              - heading "Creative" [level=3] [ref=e236]
+              - paragraph [ref=e237]: Audio · Perifericos
+              - paragraph [ref=e238]: Soluciones de sonido, auriculares y accesorios multimedia para el entorno corporativo.
+        - article [ref=e240]:
+          - generic [ref=e241]:
+            - generic [ref=e242]: "017"
+            - generic [ref=e243]:
+              - heading "Klipxtreme" [level=3] [ref=e244]
+              - paragraph [ref=e245]: Audio · Accesorios
+              - paragraph [ref=e246]: Accesorios y perifericos de audio con excelente relacion calidad-precio para el mercado empresarial.
+        - article [ref=e248]:
+          - generic [ref=e249]:
+            - generic [ref=e250]: "018"
+            - generic [ref=e251]:
+              - heading "Epson" [level=3] [ref=e252]
+              - paragraph [ref=e253]: Impresion · Proyeccion
+              - paragraph [ref=e254]: Impresoras, proyectores y escaneres de alta precision para entornos de oficina y presentaciones.
+        - article [ref=e256]:
+          - generic [ref=e257]:
+            - generic [ref=e258]: "019"
+            - generic [ref=e259]:
+              - heading "Xerox" [level=3] [ref=e260]
+              - paragraph [ref=e261]: Impresion · Documental
+              - paragraph [ref=e262]: Soluciones de impresion y gestion documental para empresas de todos los tamanos.
+        - article [ref=e264]:
+          - generic [ref=e265]:
+            - generic [ref=e266]: "020"
+            - generic [ref=e267]:
+              - heading "Brother" [level=3] [ref=e268]
+              - paragraph [ref=e269]: Impresion · Oficina
+              - paragraph [ref=e270]: Impresoras laser y de etiquetas con soluciones de conectividad para entornos de oficina modernos.
+        - article [ref=e272]:
+          - generic [ref=e273]:
+            - generic [ref=e274]: "021"
+            - generic [ref=e275]:
+              - heading "Kyocera" [level=3] [ref=e276]
+              - paragraph [ref=e277]: Impresion · Multifuncional
+              - paragraph [ref=e278]: Equipos multifuncionales de largo ciclo de vida con bajo costo por pagina para empresas.
+        - article [ref=e280]:
+          - generic [ref=e281]:
+            - generic [ref=e282]: "022"
+            - generic [ref=e283]:
+              - heading "APC" [level=3] [ref=e284]
+              - paragraph [ref=e285]: UPS · Energia
+              - paragraph [ref=e286]: Soluciones de alimentacion ininterrumpida, PDU y proteccion energetica para infraestructura critica.
+        - article [ref=e288]:
+          - generic [ref=e289]:
+            - generic [ref=e290]: "023"
+            - generic [ref=e291]:
+              - heading "Forza" [level=3] [ref=e292]
+              - paragraph [ref=e293]: UPS · Energia
+              - paragraph [ref=e294]: UPS y reguladores de voltaje para proteger equipos electronicos en entornos corporativos.
+        - article [ref=e296]:
+          - generic [ref=e297]:
+            - generic [ref=e298]: "024"
+            - generic [ref=e299]:
+              - heading "Vertiv" [level=3] [ref=e300]
+              - paragraph [ref=e301]: Infraestructura · Energia
+              - paragraph [ref=e302]: "Soluciones criticas de infraestructura digital: energia, enfriamiento y gestion de TI."
+        - article [ref=e304]:
+          - generic [ref=e305]:
+            - generic [ref=e306]: "025"
+            - generic [ref=e307]:
+              - heading "CDP" [level=3] [ref=e308]
+              - paragraph [ref=e309]: UPS · Energia
+              - paragraph [ref=e310]: Unidades de poder ininterrumpible y supresores de voltaje para proteccion de equipos.
+        - article [ref=e312]:
+          - generic [ref=e313]:
+            - generic [ref=e314]: "026"
+            - generic [ref=e315]:
+              - heading "Aruba" [level=3] [ref=e316]
+              - paragraph [ref=e317]: Networking · WiFi
+              - paragraph [ref=e318]: Soluciones de red inalambrica empresarial, switching y seguridad de acceso para organizaciones.
+        - article [ref=e320]:
+          - generic [ref=e321]:
+            - generic [ref=e322]: "027"
+            - generic [ref=e323]:
+              - heading "Cisco" [level=3] [ref=e324]
+              - paragraph [ref=e325]: Networking · Seguridad
+              - paragraph [ref=e326]: Infraestructura de red, switches, routers y soluciones de seguridad para empresas.
+        - article [ref=e328]:
+          - generic [ref=e329]:
+            - generic [ref=e330]: "028"
+            - generic [ref=e331]:
+              - heading "D-Link" [level=3] [ref=e332]
+              - paragraph [ref=e333]: Networking · SMB
+              - paragraph [ref=e334]: "Equipos de red para pequenas y medianas empresas: switches, access points y routers."
+        - article [ref=e336]:
+          - generic [ref=e337]:
+            - generic [ref=e338]: "029"
+            - generic [ref=e339]:
+              - heading "MikroTik" [level=3] [ref=e340]
+              - paragraph [ref=e341]: Networking · Routers
+              - paragraph [ref=e342]: Routers y switches de alto rendimiento con sistema operativo RouterOS para redes avanzadas.
+        - article [ref=e344]:
+          - generic [ref=e345]:
+            - generic [ref=e346]: "030"
+            - generic [ref=e347]:
+              - heading "Targus" [level=3] [ref=e348]
+              - paragraph [ref=e349]: Accesorios · Movilidad
+              - paragraph [ref=e350]: Maletines, hubs USB-C y accesorios de movilidad para profesionales en entornos corporativos.
+        - article [ref=e352]:
+          - generic [ref=e353]:
+            - generic [ref=e354]: "031"
+            - generic [ref=e355]:
+              - heading "Gnius" [level=3] [ref=e356]
+              - paragraph [ref=e357]: Perifericos · Oficina
+              - paragraph [ref=e358]: Teclados, ratones y accesorios de computo para entornos de oficina a precios competitivos.
+        - article [ref=e360]:
+          - generic [ref=e361]:
+            - generic [ref=e362]: "032"
+            - generic [ref=e363]:
+              - heading "Xtech" [level=3] [ref=e364]
+              - paragraph [ref=e365]: Perifericos · Accesorios
+              - paragraph [ref=e366]: Amplia gama de perifericos y accesorios tecnologicos para el mercado corporativo.
+        - article [ref=e368]:
+          - generic [ref=e369]:
+            - generic [ref=e370]: "033"
+            - generic [ref=e371]:
+              - heading "Kingston" [level=3] [ref=e372]
+              - paragraph [ref=e373]: Almacenamiento · Memoria
+              - paragraph [ref=e374]: Memorias RAM, unidades SSD y soluciones de almacenamiento flash para servidores y estaciones.
+        - article [ref=e376]:
+          - generic [ref=e377]:
+            - generic [ref=e378]: "034"
+            - generic [ref=e379]:
+              - heading "Seagate" [level=3] [ref=e380]
+              - paragraph [ref=e381]: Almacenamiento · HDD/SSD
+              - paragraph [ref=e382]: Discos duros, SSD y soluciones de almacenamiento empresarial de alta capacidad y rendimiento.
+        - article [ref=e384]:
+          - generic [ref=e385]:
+            - generic [ref=e386]: "035"
+            - generic [ref=e387]:
+              - heading "WD" [level=3] [ref=e388]
+              - paragraph [ref=e389]: Almacenamiento · NAS
+              - paragraph [ref=e390]: Soluciones de almacenamiento Western Digital para NAS empresarial, SSD y discos de alto rendimiento.
+        - article [ref=e392]:
+          - generic [ref=e393]:
+            - generic [ref=e394]: "036"
+            - generic [ref=e395]:
+              - heading "TeamGroup" [level=3] [ref=e396]
+              - paragraph [ref=e397]: Almacenamiento · Memoria
+              - paragraph [ref=e398]: Memorias RAM y SSD de alto rendimiento para servidores y estaciones de trabajo corporativas.
+        - article [ref=e400]:
+          - generic [ref=e401]:
+            - generic [ref=e402]: "037"
+            - generic [ref=e403]:
+              - heading "Dahua" [level=3] [ref=e404]
+              - paragraph [ref=e405]: Seguridad · CCTV
+              - paragraph [ref=e406]: Camaras IP, NVR y soluciones de videovigilancia inteligente para instalaciones empresariales.
+        - article [ref=e408]:
+          - generic [ref=e409]:
+            - generic [ref=e410]: "038"
+            - generic [ref=e411]:
+              - heading "Hikvision" [level=3] [ref=e412]
+              - paragraph [ref=e413]: Seguridad · CCTV
+              - paragraph [ref=e414]: Sistemas de videovigilancia, control de acceso y seguridad electronica para empresas y gobierno.
+        - article [ref=e416]:
+          - generic [ref=e417]:
+            - generic [ref=e418]: "039"
+            - generic [ref=e419]:
+              - heading "Axis" [level=3] [ref=e420]
+              - paragraph [ref=e421]: Seguridad · Videovigilancia
+              - paragraph [ref=e422]: Camaras de red y soluciones de video inteligente con analitica avanzada para entornos criticos.
+        - article [ref=e424]:
+          - generic [ref=e425]:
+            - generic [ref=e426]: "040"
+            - generic [ref=e427]:
+              - heading "Teros" [level=3] [ref=e428]
+              - paragraph [ref=e429]: Accesorios · Computo
+              - paragraph [ref=e430]: Accesorios de computo, fundas y perifericos de calidad para entornos profesionales.
+        - article [ref=e432]:
+          - generic [ref=e433]:
+            - generic [ref=e434]: "041"
+            - generic [ref=e435]:
+              - heading "Elise" [level=3] [ref=e436]
+              - paragraph [ref=e437]: Networking · Accesorios
+              - paragraph [ref=e438]: Soluciones de conectividad y accesorios de red para infraestructuras empresariales.
+  - contentinfo [ref=e440]:
+    - generic [ref=e441]:
+      - generic [ref=e442]:
+        - link "Codesotec home" [ref=e443] [cursor=pointer]:
+          - /url: "#top"
+          - img "Codesotec" [ref=e444]
+        - generic [ref=e445]:
+          - generic [ref=e446]:
+            - generic [ref=e447]: Dirección
+            - text: Calle Ficaria 3856 - Urbanización Las Palmeras, Los Olivos
+          - generic [ref=e448]:
+            - generic [ref=e449]: Teléfonos
+            - text: +(51) 997441958
+            - text: +(51) 979 890 845
+            - text: (01) 7702212
+          - generic [ref=e450]:
+            - generic [ref=e451]: Email
+            - link "ventas@codesotec.com" [ref=e452] [cursor=pointer]:
+              - /url: mailto:ventas@codesotec.com
+          - generic [ref=e453]:
+            - generic [ref=e454]: Horario
+            - text: Lunes - Sábados
+            - text: 9.00 hrs - 19.00 hrs
+      - generic: Codesotec
+      - generic [ref=e456]: © 2018 – 2026 All rights reserved. Codesotec Ltd.
+  - generic [ref=e459]:
+    - button "Menu" [ref=e460]:
+      - img [ref=e462]
+      - generic: Menu
+    - button "Inspect" [ref=e466]:
+      - img [ref=e468]
+      - generic: Inspect
+    - button "Audit" [ref=e470]:
+      - img [ref=e472]
+      - generic: Audit
+    - button "Settings" [ref=e475]:
+      - img [ref=e477]
+      - generic: Settings

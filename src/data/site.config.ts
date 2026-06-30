@@ -26,7 +26,6 @@ export const SITE: SiteConfig = {
     { label: "Nosotros", href: "/nosotros" },
     { label: "Productos", href: "/productos" },
     { label: "Partners", href: "/partners" },
-    { label: "Contacto", href: "/contacto" },
   ],
 
   social: [

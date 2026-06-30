@@ -26,6 +26,9 @@ export const SELECTORS = {
   reveal: `[${DATA.reveal}]`,
   magnetic: `[${DATA.magnetic}]`,
   stackCard: "[data-stack-card]",
+  nosotrosPage: "[data-nosotros-page]",
+  nosotrosBanner: "[data-nosotros-banner]",
+  nosotrosSection: "[data-nosotros-section]",
 } as const;
 
 /** Clases que el JS conmuta (estilizadas en el CSS de cada componente). */
