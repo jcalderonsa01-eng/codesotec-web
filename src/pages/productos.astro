@@ -1,35 +1,207 @@
 ---
 import BaseLayout from "@/layouts/BaseLayout.astro";
+import { PRODUCTOS } from "@/data/productos";
+import CartDrawer from "@/components/sections/CartDrawer.astro";
 ---
 
-<BaseLayout title="Productos" description="Descubre los productos y soluciones tecnológicas de Codesotec.">
-  <section class="page-section">
-    <div class="page-content">
+<BaseLayout
+  title="Productos"
+  description="Descubre los productos y soluciones tecnológicas de Codesotec."
+>
+  <section class="productos-page wrap">
+    <header class="productos-header">
       <h1>Productos</h1>
-      <p>
-        Ofrecemos un portafolio completo de soluciones TI: desde infraestructura y ciberseguridad hasta
-        desarrollo de software a medida y consultoría tecnológica.
-      </p>
+      <p>Selecciona los productos que deseas cotizar y recibe una cotización personalizada</p>
+    </header>
+
+    <div class="productos-filter">
+      <button class="filter-btn active" data-filter="all">Todos</button>
+      <button class="filter-btn" data-filter="Infraestructura">Infraestructura</button>
+      <button class="filter-btn" data-filter="Ciberseguridad">Ciberseguridad</button>
+      <button class="filter-btn" data-filter="Software">Software</button>
+      <button class="filter-btn" data-filter="Cloud">Cloud</button>
+      <button class="filter-btn" data-filter="Equipamiento">Equipamiento</button>
+    </div>
+
+    <div class="productos-grid">
+      {
+        PRODUCTOS.map((p) => (
+          <article class="producto-card" data-categoria={p.categoria}>
+            <span class="producto-categoria">{p.categoria}</span>
+            <h3 class="producto-nombre">{p.nombre}</h3>
+            <p class="producto-desc">{p.descripcion}</p>
+            <div class="producto-footer">
+              <span class="producto-precio">
+                S/ {p.precio.toLocaleString("es-PE", { minimumFractionDigits: 2, maximumFractionDigits: 2 })}
+              </span>
+              <button class="producto-add-btn" data-add-to-cart={p.id}>
+                Agregar
+              </button>
+            </div>
+          </article>
+        ))
+      }
     </div>
   </section>
+
+  <CartDrawer productos={PRODUCTOS} />
 </BaseLayout>
 
+<script>
+  const filterBtns = document.querySelectorAll(".filter-btn");
+  const cards = document.querySelectorAll(".producto-card");
+
+  filterBtns.forEach((btn) => {
+    btn.addEventListener("click", () => {
+      filterBtns.forEach((b) => b.classList.remove("active"));
+      btn.classList.add("active");
+
+      const filter = btn.dataset.filter;
+
+      cards.forEach((card) => {
+        if (filter === "all" || card.dataset.categoria === filter) {
+          card.style.display = "flex";
+        } else {
+          card.style.display = "none";
+        }
+      });
+    });
+  });
+</script>
+
 <style>
-  .page-section {
-    padding: 160px 24px 80px;
-    max-width: 800px;
-    margin: 0 auto;
-    min-height: 60vh;
+  .productos-page {
+    padding-top: calc(100px + var(--pad));
+    padding-bottom: calc(60px + var(--pad));
   }
-  .page-content h1 {
+
+  .productos-header {
+    text-align: center;
+    margin-bottom: 48px;
+  }
+  .productos-header h1 {
     font-size: clamp(2rem, 5vw, 3.2rem);
     font-weight: 700;
-    margin-bottom: 24px;
     letter-spacing: -0.03em;
+    margin-bottom: 12px;
   }
-  .page-content p {
+  .productos-header p {
+    font-size: 1.05rem;
+    color: var(--color-faint);
+    max-width: 640px;
+    margin: 0 auto;
+    line-height: 1.7;
+  }
+
+  .productos-filter {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 8px;
+    justify-content: center;
+    margin-bottom: 40px;
+  }
+
+  .filter-btn {
+    padding: 8px 18px;
+    border-radius: 20px;
+    border: 1px solid var(--border-soft);
+    background: transparent;
+    color: var(--color-faint);
+    font-size: 0.82rem;
+    font-weight: 500;
+    cursor: pointer;
+    transition: all 0.25s var(--ease-brand);
+    font-family: inherit;
+  }
+  .filter-btn:hover {
+    border-color: var(--color-accent);
+    color: var(--color-fg);
+  }
+  .filter-btn.active {
+    background: var(--color-accent);
+    border-color: var(--color-accent);
+    color: #fff;
+  }
+
+  .productos-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(300px, 1fr));
+    gap: 20px;
+  }
+
+  .producto-card {
+    display: flex;
+    flex-direction: column;
+    padding: 24px;
+    background: rgba(255, 255, 255, 0.03);
+    border: 1px solid var(--border-soft);
+    border-radius: 14px;
+    backdrop-filter: blur(8px);
+    transition: border-color 0.3s var(--ease-brand), transform 0.3s var(--ease-brand), box-shadow 0.3s var(--ease-brand);
+  }
+  .producto-card:hover {
+    border-color: rgba(34, 171, 207, 0.3);
+    transform: translateY(-3px);
+    box-shadow: 0 8px 30px rgba(34, 171, 207, 0.08);
+  }
+
+  .producto-categoria {
+    display: inline-block;
+    font-size: 0.72rem;
+    font-weight: 600;
+    text-transform: uppercase;
+    letter-spacing: 0.06em;
+    color: var(--color-accent);
+    margin-bottom: 10px;
+  }
+
+  .producto-nombre {
+    font-size: 1.05rem;
+    font-weight: 600;
+    margin-bottom: 8px;
+    line-height: 1.3;
+  }
+
+  .producto-desc {
+    font-size: 0.85rem;
+    line-height: 1.6;
+    color: var(--color-faint);
+    margin-bottom: 20px;
+    flex: 1;
+  }
+
+  .producto-footer {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    gap: 12px;
+  }
+
+  .producto-precio {
     font-size: 1.1rem;
-    line-height: 1.8;
-    color: var(--color-muted);
+    font-weight: 700;
+    color: var(--color-fg);
+    letter-spacing: -0.01em;
+  }
+
+  .producto-add-btn {
+    padding: 8px 20px;
+    border-radius: 20px;
+    border: none;
+    background: var(--color-accent);
+    color: #fff;
+    font-size: 0.82rem;
+    font-weight: 600;
+    cursor: pointer;
+    transition: background 0.25s var(--ease-brand), transform 0.2s;
+    font-family: inherit;
+    white-space: nowrap;
+  }
+  .producto-add-btn:hover {
+    background: var(--color-accent-bright);
+    transform: scale(1.04);
+  }
+  .producto-add-btn:active {
+    transform: scale(0.97);
   }
 </style>

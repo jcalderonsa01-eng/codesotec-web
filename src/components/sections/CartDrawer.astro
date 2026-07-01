@@ -1,0 +1,900 @@
+---
+import type { Product } from "@/data/types";
+
+interface Props {
+  productos: Product[];
+}
+const { productos } = Astro.props;
+---
+
+<script type="application/json" id="productos-data" set:html={JSON.stringify(productos)}></script>
+
+<button id="cart-toggle" class="cart-fab" aria-label="Abrir carrito">
+  <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+    <circle cx="9" cy="21" r="1"/><circle cx="20" cy="21" r="1"/>
+    <path d="M1 1h4l2.68 13.39a2 2 0 0 0 2 1.61h9.72a2 2 0 0 0 2-1.61L23 6H6"/>
+  </svg>
+  <span id="cart-count" class="cart-badge">0</span>
+</button>
+
+<div id="cart-overlay" class="cart-overlay"></div>
+
+<aside id="cart-drawer" class="cart-drawer" role="dialog" aria-modal="true" aria-label="Carrito de cotización">
+  <div class="cart-drawer-inner">
+    <header class="cart-header">
+      <h2>Carrito de Cotización</h2>
+      <button id="cart-close" class="cart-close-btn" aria-label="Cerrar carrito">
+        <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round">
+          <line x1="18" y1="6" x2="6" y2="18"/><line x1="6" y1="6" x2="18" y2="18"/>
+        </svg>
+      </button>
+    </header>
+
+    <div id="cart-body" class="cart-body">
+      <div id="cart-empty" class="cart-empty">
+        <svg width="48" height="48" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round" class="cart-empty-icon">
+          <circle cx="9" cy="21" r="1"/><circle cx="20" cy="21" r="1"/>
+          <path d="M1 1h4l2.68 13.39a2 2 0 0 0 2 1.61h9.72a2 2 0 0 0 2-1.61L23 6H6"/>
+        </svg>
+        <p>No has agregado productos</p>
+        <p class="cart-empty-hint">Explora nuestro catálogo y agrega productos para cotizar</p>
+      </div>
+      <div id="cart-items" class="cart-items"></div>
+    </div>
+
+    <footer id="cart-footer" class="cart-footer hidden">
+      <div class="cart-summary">
+        <div class="summary-row">
+          <span>Subtotal</span>
+          <span id="cart-subtotal">S/ 0.00</span>
+        </div>
+        <div class="summary-row">
+          <span>IGV (18%)</span>
+          <span id="cart-igv">S/ 0.00</span>
+        </div>
+        <div class="summary-row summary-total">
+          <span>Total</span>
+          <span id="cart-total">S/ 0.00</span>
+        </div>
+      </div>
+      <button id="cart-quote-btn" class="cart-quote-btn" disabled>
+        Cotizar productos
+      </button>
+    </footer>
+  </div>
+</aside>
+
+<div id="quote-modal" class="quote-modal">
+  <div class="quote-modal-backdrop" id="quote-modal-backdrop"></div>
+  <div class="quote-modal-content">
+    <button class="quote-modal-close" id="quote-modal-close" aria-label="Cerrar">
+      <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round">
+        <line x1="18" y1="6" x2="6" y2="18"/><line x1="6" y1="6" x2="18" y2="18"/>
+      </svg>
+    </button>
+    <h3>Generar cotización</h3>
+    <p class="quote-modal-desc">Completa tus datos para recibir la cotización por correo y Discord</p>
+    <form id="quote-form">
+      <div class="form-field">
+        <label for="quote-name">Nombre completo</label>
+        <input type="text" id="quote-name" required placeholder="Ej: Juan Pérez" autocomplete="name" />
+      </div>
+      <div class="form-field">
+        <label for="quote-email">Correo electrónico</label>
+        <input type="email" id="quote-email" required placeholder="Ej: juan@empresa.com" autocomplete="email" />
+      </div>
+      <button type="submit" class="quote-submit-btn" id="quote-submit-btn">
+        Generar cotización
+      </button>
+    </form>
+    <div id="quote-loading" class="quote-loading hidden">
+      <span class="quote-spinner"></span>
+      <span>Generando cotización...</span>
+    </div>
+  </div>
+</div>
+
+<div id="cart-toast" class="cart-toast" role="alert"></div>
+
+<script>
+  import { jsPDF } from "jspdf";
+  import { SITE } from "@/data/site.config";
+
+  const PRODUCTOS = JSON.parse(document.getElementById("productos-data").textContent);
+  const N8N_URL = SITE.n8nWebhookUrl;
+
+  const productMap = {};
+  PRODUCTOS.forEach((p) => {
+    productMap[p.id] = p;
+  });
+
+  let cart = [];
+
+  const toggle = document.getElementById("cart-toggle");
+  const overlay = document.getElementById("cart-overlay");
+  const drawer = document.getElementById("cart-drawer");
+  const closeBtn = document.getElementById("cart-close");
+  const cartEmpty = document.getElementById("cart-empty");
+  const cartItems = document.getElementById("cart-items");
+  const cartFooter = document.getElementById("cart-footer");
+  const cartCount = document.getElementById("cart-count");
+  const cartSubtotal = document.getElementById("cart-subtotal");
+  const cartIgv = document.getElementById("cart-igv");
+  const cartTotal = document.getElementById("cart-total");
+  const quoteBtn = document.getElementById("cart-quote-btn");
+  const quoteModal = document.getElementById("quote-modal");
+  const quoteForm = document.getElementById("quote-form");
+  const quoteName = document.getElementById("quote-name");
+  const quoteEmail = document.getElementById("quote-email");
+  const quoteSubmitBtn = document.getElementById("quote-submit-btn");
+  const quoteLoading = document.getElementById("quote-loading");
+  const toast = document.getElementById("cart-toast");
+  const quoteModalClose = document.getElementById("quote-modal-close");
+  const quoteModalBackdrop = document.getElementById("quote-modal-backdrop");
+
+  function saveCart() {
+    try {
+      localStorage.setItem("codesotec-cart", JSON.stringify(cart));
+    } catch (e) {}
+  }
+
+  function loadCart() {
+    try {
+      const saved = localStorage.getItem("codesotec-cart");
+      if (saved) {
+        const parsed = JSON.parse(saved);
+        cart = parsed.filter((item) => productMap[item.product.id]);
+      }
+    } catch (e) {}
+  }
+
+  function addToCart(productId) {
+    const existing = cart.find((item) => item.product.id === productId);
+    if (existing) {
+      existing.cantidad++;
+    } else {
+      const product = productMap[productId];
+      if (!product) return;
+      cart.push({ product, cantidad: 1 });
+    }
+    saveCart();
+    renderCart();
+    showToast("Producto agregado al carrito");
+    openDrawer();
+  }
+
+  function removeFromCart(productId) {
+    cart = cart.filter((item) => item.product.id !== productId);
+    saveCart();
+    renderCart();
+  }
+
+  function updateQuantity(productId, delta) {
+    const item = cart.find((item) => item.product.id === productId);
+    if (!item) return;
+    const newQty = item.cantidad + delta;
+    if (newQty < 1) {
+      removeFromCart(productId);
+      return;
+    }
+    item.cantidad = newQty;
+    saveCart();
+    renderCart();
+  }
+
+  function renderCart() {
+    const count = cart.reduce((sum, item) => sum + item.cantidad, 0);
+    cartCount.textContent = count;
+
+    if (cart.length === 0) {
+      cartEmpty.classList.remove("hidden");
+      cartItems.innerHTML = "";
+      cartFooter.classList.add("hidden");
+      quoteBtn.disabled = true;
+      return;
+    }
+
+    cartEmpty.classList.add("hidden");
+    cartFooter.classList.remove("hidden");
+    quoteBtn.disabled = false;
+
+    const formatPrice = (n) =>
+      "S/ " +
+      n.toLocaleString("es-PE", { minimumFractionDigits: 2, maximumFractionDigits: 2 });
+
+    cartItems.innerHTML = cart
+      .map(
+        (item) => `
+      <div class="cart-item" data-product-id="${item.product.id}">
+        <div class="cart-item-info">
+          <div class="cart-item-name">${item.product.nombre}</div>
+          <div class="cart-item-price">${formatPrice(item.product.precio)}</div>
+        </div>
+        <div class="cart-item-qty">
+          <button class="qty-btn" data-qty-minus="${item.product.id}" aria-label="Disminuir cantidad">−</button>
+          <span class="qty-value">${item.cantidad}</span>
+          <button class="qty-btn" data-qty-plus="${item.product.id}" aria-label="Aumentar cantidad">+</button>
+        </div>
+        <div class="cart-item-total">${formatPrice(item.cantidad * item.product.precio)}</div>
+        <button class="cart-item-remove" data-remove="${item.product.id}" aria-label="Eliminar producto">
+          <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round">
+            <polyline points="3 6 5 6 21 6"/><path d="M19 6v14a2 2 0 0 1-2 2H7a2 2 0 0 1-2-2V6m3 0V4a2 2 0 0 1 2-2h4a2 2 0 0 1 2 2v2"/>
+          </svg>
+        </button>
+      </div>`
+      )
+      .join("");
+
+    updateTotals();
+  }
+
+  function updateTotals() {
+    const subtotal = cart.reduce(
+      (sum, item) => sum + item.cantidad * item.product.precio,
+      0
+    );
+    const igv = subtotal * 0.18;
+    const total = subtotal + igv;
+
+    const fmt = (n) =>
+      "S/ " +
+      n.toLocaleString("es-PE", { minimumFractionDigits: 2, maximumFractionDigits: 2 });
+
+    cartSubtotal.textContent = fmt(subtotal);
+    cartIgv.textContent = fmt(igv);
+    cartTotal.textContent = fmt(total);
+  }
+
+  function openDrawer() {
+    drawer.classList.add("open");
+    overlay.classList.add("open");
+    document.body.classList.add("no-scroll");
+  }
+
+  function closeDrawer() {
+    drawer.classList.remove("open");
+    overlay.classList.remove("open");
+    document.body.classList.remove("no-scroll");
+  }
+
+  function openModal() {
+    quoteModal.classList.add("open");
+    quoteName.focus();
+  }
+
+  function closeModal() {
+    quoteModal.classList.remove("open");
+    quoteForm.reset();
+    quoteSubmitBtn.classList.remove("hidden");
+    quoteLoading.classList.add("hidden");
+  }
+
+  let toastTimeout;
+
+  function showToast(message) {
+    toast.textContent = message;
+    toast.classList.add("show");
+    clearTimeout(toastTimeout);
+    toastTimeout = setTimeout(() => toast.classList.remove("show"), 3000);
+  }
+
+  function generatePDF(nombre, email) {
+    const doc = new jsPDF();
+    const now = new Date();
+
+    const fechaStr = now.toLocaleDateString("es-PE", {
+      year: "numeric",
+      month: "long",
+      day: "numeric",
+    });
+    const horaStr = now.toLocaleTimeString("es-PE", {
+      hour: "2-digit",
+      minute: "2-digit",
+    });
+
+    doc.setFillColor(10, 10, 20);
+    doc.rect(0, 0, 210, 38, "F");
+
+    doc.setTextColor(255, 255, 255);
+    doc.setFontSize(22);
+    doc.text("COTESOTEC", 14, 22);
+    doc.setFontSize(10);
+    doc.text("Cotización de Productos", 14, 32);
+
+    doc.setTextColor(40, 40, 60);
+    doc.setFontSize(10);
+    doc.text(`Fecha: ${fechaStr}`, 14, 52);
+    doc.text(`Hora: ${horaStr}`, 14, 60);
+    doc.text(`Cliente: ${nombre}`, 14, 68);
+    doc.text(`Email: ${email}`, 14, 76);
+
+    const startY = 90;
+    doc.setFillColor(34, 171, 207);
+    doc.rect(14, startY, 182, 8, "F");
+    doc.setTextColor(255, 255, 255);
+    doc.setFontSize(9);
+    doc.text("Cant.", 16, startY + 5.5);
+    doc.text("Producto", 36, startY + 5.5);
+    doc.text("Precio Unit.", 120, startY + 5.5, { align: "right" });
+    doc.text("Total", 182, startY + 5.5, { align: "right" });
+
+    let y = startY + 14;
+    doc.setTextColor(60, 60, 80);
+    doc.setFontSize(9);
+
+    cart.forEach((item, i) => {
+      if (i % 2 === 0) {
+        doc.setFillColor(245, 245, 250);
+        doc.rect(14, y - 4, 182, 10, "F");
+      }
+      doc.text(String(item.cantidad), 16, y + 3);
+      doc.text(item.product.nombre, 36, y + 3);
+      doc.text(
+        "S/ " + item.product.precio.toFixed(2),
+        120,
+        y + 3,
+        { align: "right" }
+      );
+      doc.text(
+        "S/ " + (item.cantidad * item.product.precio).toFixed(2),
+        182,
+        y + 3,
+        { align: "right" }
+      );
+      y += 10;
+    });
+
+    y += 4;
+
+    const subtotal = cart.reduce(
+      (sum, item) => sum + item.cantidad * item.product.precio,
+      0
+    );
+    const igv = subtotal * 0.18;
+    const total = subtotal + igv;
+
+    doc.setDrawColor(200, 200, 210);
+    doc.line(120, y, 196, y);
+    y += 7;
+
+    doc.setTextColor(60, 60, 80);
+    doc.setFontSize(9);
+    doc.text("Subtotal:", 140, y);
+    doc.text("S/ " + subtotal.toFixed(2), 182, y, { align: "right" });
+    y += 6;
+    doc.text("IGV (18%):", 140, y);
+    doc.text("S/ " + igv.toFixed(2), 182, y, { align: "right" });
+    y += 6;
+    doc.setDrawColor(34, 171, 207);
+    doc.setLineWidth(0.5);
+    doc.line(120, y, 196, y);
+    y += 7;
+    doc.setTextColor(34, 171, 207);
+    doc.setFontSize(11);
+    doc.setFont("helvetica", "bold");
+    doc.text("TOTAL:", 140, y);
+    doc.text("S/ " + total.toFixed(2), 182, y, { align: "right" });
+
+    doc.setFont("helvetica", "normal");
+    doc.setTextColor(150, 150, 160);
+    doc.setFontSize(8);
+    doc.text("Codesotec — Tecnología que impulsa tu negocio", 14, 280);
+    doc.text("www.codesotec.com  |  ventas@codesotec.com", 14, 285);
+
+    return doc.output("datauristring");
+  }
+
+  async function submitQuote(nombre, email) {
+    quoteSubmitBtn.classList.add("hidden");
+    quoteLoading.classList.remove("hidden");
+
+    try {
+      const pdfDataUri = generatePDF(nombre, email);
+      const pdfBase64 = pdfDataUri.split(",")[1];
+
+      const payload = {
+        nombre,
+        email,
+        fecha: new Date().toISOString(),
+        productos: cart.map((item) => ({
+          id: item.product.id,
+          nombre: item.product.nombre,
+          cantidad: item.cantidad,
+          precio: item.product.precio,
+          total: item.cantidad * item.product.precio,
+        })),
+        pdfBase64,
+      };
+
+      const res = await fetch(N8N_URL, {
+        method: "POST",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify(payload),
+      });
+
+      if (!res.ok) throw new Error("Error del servidor");
+
+      const link = document.createElement("a");
+      link.href = pdfDataUri;
+      link.download = `cotizacion-codesotec-${Date.now()}.pdf`;
+      link.click();
+
+      cart = [];
+      saveCart();
+      renderCart();
+      closeDrawer();
+      closeModal();
+      showToast("¡Cotización enviada! Revisa tu correo y Discord.");
+    } catch (err) {
+      showToast("Error al enviar la cotización. Intenta de nuevo.");
+      quoteSubmitBtn.classList.remove("hidden");
+      quoteLoading.classList.add("hidden");
+    }
+  }
+
+  loadCart();
+  renderCart();
+
+  document.addEventListener("click", (e) => {
+    const btn = e.target.closest("[data-add-to-cart]");
+    if (btn) {
+      e.preventDefault();
+      addToCart(btn.dataset.addToCart);
+    }
+  });
+
+  cartItems.addEventListener("click", (e) => {
+    const target = e.target.closest("button");
+    if (!target) return;
+    const minus = target.dataset.qtyMinus;
+    const plus = target.dataset.qtyPlus;
+    const remove = target.dataset.remove;
+    if (minus) updateQuantity(minus, -1);
+    else if (plus) updateQuantity(plus, 1);
+    else if (remove) removeFromCart(remove);
+  });
+
+  toggle.addEventListener("click", openDrawer);
+  closeBtn.addEventListener("click", closeDrawer);
+  overlay.addEventListener("click", closeDrawer);
+
+  quoteBtn.addEventListener("click", openModal);
+
+  quoteModalClose.addEventListener("click", closeModal);
+  quoteModalBackdrop.addEventListener("click", closeModal);
+
+  quoteForm.addEventListener("submit", (e) => {
+    e.preventDefault();
+    const nombre = quoteName.value.trim();
+    const email = quoteEmail.value.trim();
+    if (!nombre || !email) return;
+    submitQuote(nombre, email);
+  });
+
+  document.addEventListener("keydown", (e) => {
+    if (e.key === "Escape") {
+      if (quoteModal.classList.contains("open")) closeModal();
+      else if (drawer.classList.contains("open")) closeDrawer();
+    }
+  });
+</script>
+
+<style>
+  .hidden {
+    display: none !important;
+  }
+
+  .cart-fab {
+    position: fixed;
+    bottom: 28px;
+    right: 28px;
+    z-index: 1000;
+    width: 56px;
+    height: 56px;
+    border-radius: 50%;
+    border: none;
+    background: var(--color-accent);
+    color: #fff;
+    cursor: pointer;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    box-shadow: 0 4px 20px rgba(34, 171, 207, 0.35);
+    transition: transform 0.3s var(--ease-brand), box-shadow 0.3s var(--ease-brand);
+  }
+  .cart-fab:hover {
+    transform: scale(1.08);
+    box-shadow: 0 6px 28px rgba(34, 171, 207, 0.5);
+  }
+
+  .cart-badge {
+    position: absolute;
+    top: -4px;
+    right: -4px;
+    min-width: 20px;
+    height: 20px;
+    border-radius: 10px;
+    background: var(--color-accent-glow);
+    color: #fff;
+    font-size: 0.7rem;
+    font-weight: 700;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    padding: 0 4px;
+  }
+
+  .cart-overlay {
+    position: fixed;
+    inset: 0;
+    z-index: 998;
+    background: rgba(2, 4, 12, 0.7);
+    opacity: 0;
+    pointer-events: none;
+    transition: opacity 0.35s var(--ease-brand);
+  }
+  .cart-overlay.open {
+    opacity: 1;
+    pointer-events: auto;
+  }
+
+  .cart-drawer {
+    position: fixed;
+    top: 0;
+    right: 0;
+    bottom: 0;
+    z-index: 999;
+    width: 100%;
+    max-width: 420px;
+    background: var(--color-bg-2);
+    border-left: 1px solid var(--border-soft);
+    transform: translateX(100%);
+    transition: transform 0.4s var(--ease-brand);
+    display: flex;
+    flex-direction: column;
+  }
+  .cart-drawer.open {
+    transform: translateX(0);
+  }
+
+  .cart-drawer-inner {
+    display: flex;
+    flex-direction: column;
+    height: 100%;
+  }
+
+  .cart-header {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    padding: 20px 24px;
+    border-bottom: 1px solid var(--border-soft);
+    flex-shrink: 0;
+  }
+  .cart-header h2 {
+    font-size: 1.15rem;
+    font-weight: 600;
+    letter-spacing: -0.02em;
+  }
+
+  .cart-close-btn {
+    background: none;
+    border: none;
+    color: var(--color-faint);
+    cursor: pointer;
+    padding: 6px;
+    border-radius: 6px;
+    transition: color 0.2s, background 0.2s;
+  }
+  .cart-close-btn:hover {
+    color: var(--color-fg);
+    background: rgba(255, 255, 255, 0.06);
+  }
+
+  .cart-body {
+    flex: 1;
+    overflow-y: auto;
+    padding: 24px;
+  }
+
+  .cart-empty {
+    text-align: center;
+    padding: 48px 0;
+    color: var(--color-faint);
+  }
+  .cart-empty-icon {
+    margin: 0 auto 16px;
+    opacity: 0.4;
+  }
+  .cart-empty p {
+    font-size: 0.95rem;
+    margin-bottom: 4px;
+  }
+  .cart-empty-hint {
+    font-size: 0.82rem;
+    opacity: 0.6;
+  }
+
+  .cart-items {
+    display: flex;
+    flex-direction: column;
+    gap: 12px;
+  }
+
+  .cart-item {
+    display: grid;
+    grid-template-columns: 1fr auto auto auto;
+    gap: 12px;
+    align-items: center;
+    padding: 12px;
+    background: var(--color-surface);
+    border-radius: 10px;
+    border: 1px solid var(--border-soft);
+  }
+  .cart-item-info {
+    min-width: 0;
+  }
+  .cart-item-name {
+    font-size: 0.85rem;
+    font-weight: 500;
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
+  }
+  .cart-item-price {
+    font-size: 0.75rem;
+    color: var(--color-faint);
+    margin-top: 2px;
+  }
+  .cart-item-qty {
+    display: flex;
+    align-items: center;
+    gap: 4px;
+  }
+  .qty-btn {
+    width: 26px;
+    height: 26px;
+    border-radius: 6px;
+    border: 1px solid var(--border-soft);
+    background: transparent;
+    color: var(--color-fg);
+    cursor: pointer;
+    font-size: 1rem;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    transition: background 0.2s, border-color 0.2s;
+  }
+  .qty-btn:hover {
+    background: rgba(255, 255, 255, 0.06);
+    border-color: var(--color-accent);
+  }
+  .qty-value {
+    font-size: 0.85rem;
+    font-weight: 600;
+    min-width: 20px;
+    text-align: center;
+  }
+  .cart-item-total {
+    font-size: 0.85rem;
+    font-weight: 600;
+    white-space: nowrap;
+  }
+  .cart-item-remove {
+    background: none;
+    border: none;
+    color: var(--color-faint);
+    cursor: pointer;
+    padding: 4px;
+    border-radius: 6px;
+    transition: color 0.2s, background 0.2s;
+  }
+  .cart-item-remove:hover {
+    color: #ff4d4d;
+    background: rgba(255, 77, 77, 0.1);
+  }
+
+  .cart-footer {
+    border-top: 1px solid var(--border-soft);
+    padding: 20px 24px;
+    flex-shrink: 0;
+  }
+
+  .cart-summary {
+    margin-bottom: 16px;
+  }
+  .summary-row {
+    display: flex;
+    justify-content: space-between;
+    font-size: 0.88rem;
+    padding: 4px 0;
+    color: var(--color-faint);
+  }
+  .summary-total {
+    font-size: 1.05rem;
+    font-weight: 700;
+    color: var(--color-fg);
+    padding-top: 8px;
+    border-top: 1px solid var(--border-soft);
+    margin-top: 4px;
+  }
+
+  .cart-quote-btn {
+    width: 100%;
+    padding: 14px;
+    border: none;
+    border-radius: 30px;
+    font-size: 0.92rem;
+    font-weight: 600;
+    background: var(--color-accent);
+    color: #fff;
+    cursor: pointer;
+    transition: background 0.3s var(--ease-brand), opacity 0.3s;
+    font-family: inherit;
+  }
+  .cart-quote-btn:hover:not(:disabled) {
+    background: var(--color-accent-bright);
+  }
+  .cart-quote-btn:disabled {
+    opacity: 0.35;
+    cursor: not-allowed;
+  }
+
+  .quote-modal {
+    position: fixed;
+    inset: 0;
+    z-index: 1001;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    opacity: 0;
+    pointer-events: none;
+    transition: opacity 0.3s var(--ease-brand);
+  }
+  .quote-modal.open {
+    opacity: 1;
+    pointer-events: auto;
+  }
+
+  .quote-modal-backdrop {
+    position: absolute;
+    inset: 0;
+    background: rgba(2, 4, 12, 0.75);
+  }
+
+  .quote-modal-content {
+    position: relative;
+    width: 90%;
+    max-width: 420px;
+    background: var(--color-bg-2);
+    border: 1px solid var(--border);
+    border-radius: 16px;
+    padding: 32px 28px 28px;
+    backdrop-filter: blur(20px);
+  }
+  .quote-modal-content h3 {
+    font-size: 1.25rem;
+    font-weight: 700;
+    margin-bottom: 6px;
+    letter-spacing: -0.02em;
+  }
+  .quote-modal-desc {
+    font-size: 0.85rem;
+    color: var(--color-faint);
+    margin-bottom: 20px;
+  }
+
+  .quote-modal-close {
+    position: absolute;
+    top: 12px;
+    right: 12px;
+    background: none;
+    border: none;
+    color: var(--color-faint);
+    cursor: pointer;
+    padding: 6px;
+    border-radius: 6px;
+    transition: color 0.2s;
+  }
+  .quote-modal-close:hover {
+    color: var(--color-fg);
+  }
+
+  .form-field {
+    margin-bottom: 16px;
+  }
+  .form-field label {
+    display: block;
+    font-size: 0.82rem;
+    font-weight: 500;
+    margin-bottom: 6px;
+    color: var(--color-faint);
+  }
+  .form-field input {
+    width: 100%;
+    padding: 10px 14px;
+    border-radius: 8px;
+    border: 1px solid var(--border-soft);
+    background: var(--color-surface);
+    color: var(--color-fg);
+    font-size: 0.9rem;
+    font-family: inherit;
+    outline: none;
+    transition: border-color 0.2s;
+  }
+  .form-field input:focus {
+    border-color: var(--color-accent);
+  }
+  .form-field input::placeholder {
+    color: rgba(255, 255, 255, 0.25);
+  }
+
+  .quote-submit-btn {
+    width: 100%;
+    padding: 12px;
+    border: none;
+    border-radius: 30px;
+    font-size: 0.92rem;
+    font-weight: 600;
+    background: var(--color-accent);
+    color: #fff;
+    cursor: pointer;
+    font-family: inherit;
+    transition: background 0.3s var(--ease-brand);
+    margin-top: 4px;
+  }
+  .quote-submit-btn:hover {
+    background: var(--color-accent-bright);
+  }
+
+  .quote-loading {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 10px;
+    padding: 12px 0;
+    color: var(--color-faint);
+    font-size: 0.88rem;
+  }
+
+  .quote-spinner {
+    width: 18px;
+    height: 18px;
+    border: 2px solid var(--border-soft);
+    border-top-color: var(--color-accent);
+    border-radius: 50%;
+    animation: spin 0.7s linear infinite;
+  }
+
+  @keyframes spin {
+    to {
+      transform: rotate(360deg);
+    }
+  }
+
+  .cart-toast {
+    position: fixed;
+    top: 24px;
+    left: 50%;
+    transform: translateX(-50%) translateY(-20px);
+    z-index: 2000;
+    padding: 12px 24px;
+    border-radius: 12px;
+    background: var(--color-accent);
+    color: #fff;
+    font-size: 0.88rem;
+    font-weight: 500;
+    opacity: 0;
+    pointer-events: none;
+    transition: opacity 0.35s var(--ease-brand), transform 0.35s var(--ease-brand);
+    white-space: nowrap;
+    max-width: 90%;
+    overflow: hidden;
+    text-overflow: ellipsis;
+  }
+  .cart-toast.show {
+    opacity: 1;
+    transform: translateX(-50%) translateY(0);
+    pointer-events: auto;
+  }
+</style>

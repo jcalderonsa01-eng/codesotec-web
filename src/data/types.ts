@@ -29,4 +29,20 @@ export interface SiteConfig {
   readonly social: readonly NavLink[];
   readonly legal: readonly NavLink[];
   readonly copyright: string;
+  readonly n8nWebhookUrl: string;
+}
+
+/** Producto del catálogo. */
+export interface Product {
+  readonly id: string;
+  readonly nombre: string;
+  readonly descripcion: string;
+  readonly categoria: string;
+  readonly precio: number;
+}
+
+/** Item en el carrito de cotización. */
+export interface CartItem {
+  readonly product: Product;
+  cantidad: number;
 }

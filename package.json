@@ -14,7 +14,8 @@
   },
   "dependencies": {
     "astro": "^5.0.0",
-    "gsap": "^3.12.5"
+    "gsap": "^3.12.5",
+    "jspdf": "^4.2.1"
   },
   "devDependencies": {
     "@astrojs/check": "^0.9.4",

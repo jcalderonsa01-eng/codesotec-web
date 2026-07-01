@@ -43,4 +43,6 @@ export const SITE: SiteConfig = {
   ],
 
   copyright: "© 2018 – 2026 All rights reserved. Codesotec Ltd.",
+
+  n8nWebhookUrl: "https://n8n-d68q.onrender.com/webhook/codesotec/quotation",
 };
